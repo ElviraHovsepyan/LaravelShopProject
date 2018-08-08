@@ -13,7 +13,7 @@ class Product extends Model
 
 
  public function Subcat(){
-
+    //hvghjkblj
      return $this->belongsToMany('App\Subcat', 'subcat_product','product_id','subcat_id');
  }
 
