@@ -10,7 +10,7 @@
                 @endif
 
                 @foreach($cats as $key=>$value)
-                <li><a href="#">{{ $cats[$key]->cat_name }}</a>
+                <li><a href="{{ route('category',['id'=>$value->id ]) }}">{{ $value->cat_name }}</a>
                     <ul>
                         @foreach($value->subcat as $k=>$v)
 
@@ -25,3 +25,7 @@
         </nav>
     </div>
 </section>
+
+
+
+

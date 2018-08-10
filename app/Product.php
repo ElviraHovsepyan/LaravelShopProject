@@ -13,8 +13,13 @@ class Product extends Model
 
 
  public function Subcat(){
-    //hvghjkblj
      return $this->belongsToMany('App\Subcat', 'subcat_product','product_id','subcat_id');
+ }
+
+ public static function getCategoryProducts($id, $num){
+     return Product::whereHas('Subcat', function ($query) use ($id){
+         $query->where('cat_id', $id);
+     })->take(3)->offset($num)->get();
  }
 
 }

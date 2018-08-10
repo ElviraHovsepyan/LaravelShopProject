@@ -11,6 +11,9 @@ $.ajaxSetup({
     }
 });
 
+
+/////////// price field
+
 $('#price').keypress(function(e){
     var dotExist = (e.target.value.indexOf('.') !== -1);
     if(e.keyCode>47 && e.keyCode<58 || e.keyCode >37 && e.keyCode<40 || (e.keyCode == 46 && !dotExist)){
@@ -20,7 +23,7 @@ $('#price').keypress(function(e){
     }
 });
 
-
+/////////////// validation
 
 $('input,textarea').keydown(function () {
     $(this).next().hide();
@@ -108,13 +111,46 @@ function ajaxRequest(url,data,hide){
     });
 }
 
+///////////////////  block users
+
+$('.btn').click(function () {
+    var btnValue = $(this).text();
+    var id = $(this).attr('id');
+    if(btnValue=='Block'){
+        $(this).text('Unblock');
+        $.ajax({
+            url: '/block',
+            type: 'post',
+            data: {id:id}
+        }).done(function(response){
+            console.log(response);
+
+        });
+    } else {
+        $(this).text('Block');
+        $.ajax({
+            url: '/unBlock',
+            type: 'post',
+            data: {id:id}
+        }).done(function(response){
+            console.log(response);
+            $(this).text('Unblock');
+        });
+    }
+});
+
+
+
+
+//////////////////  search
 
 $('body').click(function () {
     $('.showResults').hide();
 });
 
-$('#searchInput').keyup(function(){
-    var key = $('#searchInput').val();
+$('.search-query').keyup(function(){
+
+    var key = $('.search-query').val();
     if(key==''){
         $('.showResults').empty();
         $('.showResults').hide();
@@ -126,73 +162,60 @@ $('#searchInput').keyup(function(){
         }).done(function (response) {
             console.log(response);
             if(response != ''){
-                var productFull = response.split('+');
+                var product = JSON.parse(response);
                 $('.showResults').empty();
-                for(var x=0;x<productFull.length;x++){
-                    var product = productFull[x].split('/');
-                    // console.log(product[0]);
-                    $('.showResults').append('<a href="/productDetails/'+product[1]+'"><p>'+product[0]+'</p></a>');
+                for(var x=0;x<product.length;x++){
+                    // var product = productFull[x].split('/');
+                    $('.showResults').append('<a href="/productDetails/'+product[x]['id']+'"><p>'+product[x]['name']+'</p></a>');
                     $('.showResults').show();
                 }
-            } else {
-                $('.showResults').append('<a href="#"<p>No Results</p></a>');
             }
         });
     }
 });
 
-$('.btn').click(function () {
-    var btnValue = $(this).text();
-    var id = $(this).attr('id');
-     if(btnValue=='Block'){
-         $(this).text('Unblock');
-         $.ajax({
-             url: '/block',
-             type: 'post',
-             data: {id:id}
-         }).done(function(response){
-             console.log(response);
 
-         });
-     } else {
-         $(this).text('Block');
-         $.ajax({
-             url: '/unBlock',
-             type: 'post',
-             data: {id:id}
-         }).done(function(response){
-             console.log(response);
-             $(this).text('Unblock');
-         });
-     }
-});
+//////////////////// scroll
 
-var number = 9;
+var url = $(location).attr('pathname').split('/');
+var page = url[1];
+var id = url[2];
+
+var number = 3;
 var inProgress = false;
-$(window).scroll(function () {
+var key = $('.search-query').val();
 
-    if($(window).scrollTop() + $(window).height() >= $(document).height() && inProgress == false){
+$(window).scroll(function () {
+    if($(window).scrollTop() + $(window).height() + 200 >= $(document).height() && inProgress == false){
         inProgress = true;
         $.ajax({
             url: '/scroll',
             type: 'post',
-            data: {number:number}
+            data: {number:number, page:page, id:id, key:key}
         }).done(function (response) {
             console.log(response);
-            var products = JSON.parse(response);
-            for(var i = 0; i < products.length; i++){
-                $('.main-products-page').append('<li class="span3">\n' +
-                    '                        <div class="product-box">\n' +
-                    '                            <a href="/productDetails/'+products[i]["id"]+'"><img alt="" src="/public/themes/images/prPics/'+products[i]["pic"]+'.jpg"></a><br/>\n' +
-                    '                            <a href="#" class="title">'+products[i]["name"]+'</a><br/>\n' +
-                    '                            <p class="price">'+products[i]["price"]+'</p>\n' +
-                    '                        </div>\n' +
-                    '                    </li>');
+            if(response){
+                var products = JSON.parse(response);
+                for(var i = 0; i < products.length; i++){
+                    $('.main-products-page').append('<li class="span3">\n' +
+                        '                        <div class="product-box">\n' +
+                        '                            <a href="/productDetails/'+products[i]["id"]+'"><img alt="" src="/public/themes/images/prPics/'+products[i]["pic"]+'.jpg"></a><br/>\n' +
+                        '                            <a href="#" class="title">'+products[i]["name"]+'</a><br/>\n' +
+                        '                            <p class="price">'+products[i]["price"]+'</p>\n' +
+                        '                        </div>\n' +
+                        '                    </li>');
+                }
             }
             inProgress = false;
             number += 3;
         });
     }
 });
+
+
+
+
+
+
 
 

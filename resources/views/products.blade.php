@@ -11,15 +11,14 @@
         <div class="row">
             <div class="span9">
                 <ul class="thumbnails listing-products main-products-page">
-                    @foreach($products as $key => $value)
-
+                    @foreach($products as $product)
 
                     <li class="span3">
                         <div class="product-box">
                             <span class="sale_tag"></span>
-                            <a href="{{ route('productDetails',['id'=>$products[$key]['id']]) }}"><img alt="" src="/public/themes/images/prPics/{{ $products[$key]['pic'] }}.jpg"></a><br/>
-                            <a href="#" class="title">{{ $products[$key]['name'] }}</a><br/>
-                            <p class="price"> ${{ $products[$key]['price'] }}</p>
+                            <a href="{{ route('productDetails',['id'=>$product->id]) }}"><img alt="" src="/public/themes/images/prPics/{{ $product->pic }}.jpg"></a><br/>
+                            <a href="#" class="title">{{ $product->name }}</a><br/>
+                            <p class="price"> ${{ $product->price }}</p>
                         </div>
                     </li>
 

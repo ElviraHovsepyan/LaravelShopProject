@@ -29,15 +29,17 @@
     <![endif]-->
 </head>
 <body>
+
 <div id="top-bar" class="container">
     <div class="row">
         <div class="span4">
-            <form method="POST" class="search_form">
+            <form method="POST" class="search_form" action="{{ route('searchAll') }}">
                 {{ csrf_field() }}
-
-                <input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt" id="searchInput" style="color:black; position:relative;">
+                <input name = 'searchName' value = "@if(!empty($key)){{ $key }} @endif" type="text" class="input-block-level search-query" Placeholder="eg. T-sirt" style="color:black; position:relative;">
                 <div class="showResults"></div>
+
             </form>
+
 
         </div>
         <div class="span8">
@@ -87,20 +89,20 @@
             <div class="block">
                 <ul class="nav nav-list">
                     <li class="nav-header">SUB CATEGORIES</li>
-                    <li><a href="products.html">Nullam semper elementum</a></li>
-                    <li class="active"><a href="products.html">Phasellus ultricies</a></li>
-                    <li><a href="products.html">Donec laoreet dui</a></li>
-                    <li><a href="products.html">Nullam semper elementum</a></li>
-                    <li><a href="products.html">Phasellus ultricies</a></li>
-                    <li><a href="products.html">Donec laoreet dui</a></li>
+                    <li><a href="#">Nullam semper elementum</a></li>
+                    <li class="active"><a href="#">Phasellus ultricies</a></li>
+                    <li><a href="#">Donec laoreet dui</a></li>
+                    <li><a href="#">Nullam semper elementum</a></li>
+                    <li><a href="#">Phasellus ultricies</a></li>
+                    <li><a href="#">Donec laoreet dui</a></li>
                 </ul>
                 <br/>
                 <ul class="nav nav-list below">
                     <li class="nav-header">MANUFACTURES</li>
-                    <li><a href="products.html">Adidas</a></li>
-                    <li><a href="products.html">Nike</a></li>
-                    <li><a href="products.html">Dunlop</a></li>
-                    <li><a href="products.html">Yamaha</a></li>
+                    <li><a href="#">Adidas</a></li>
+                    <li><a href="#">Nike</a></li>
+                    <li><a href="#">Dunlop</a></li>
+                    <li><a href="#">Yamaha</a></li>
                 </ul>
             </div>
             <div class="block">
