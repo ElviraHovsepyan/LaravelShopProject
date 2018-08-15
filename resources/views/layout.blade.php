@@ -60,7 +60,7 @@
                         @else
                             <li>Hello {{Auth::user()->name}}</li>
                         @endif
-
+                         <li><a href="{{ route('chart') }}">View Diagram</a></li>
                         <li><a href="{{ route('logout') }}">Log Out</a></li>
                         <li><a href="{{ route('token') }}">Get Token</a></li>
                         <li><a href="{{ route('index') }}">Google API</a></li>
@@ -217,6 +217,7 @@
 </div>
 <script src="/public/themes/js/common.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 <script src="/public/js/script.js"></script>
 
 @show

@@ -16,9 +16,13 @@ class SearchController extends Controller
     }
     public function searchAll(Request $request){
         $key = $request->searchName;
-        $products = Product::where("name","LIKE","%$key%")->take(3)->get();
-        if($products){
-            return view('products',['products'=>$products,'key'=>$key]);
+        if($key){
+            $products = Product::where("name","LIKE","%$key%")->take(3)->get();
+            if(!empty($products)){
+                return view('products',['products'=>$products,'key'=>$key]);
+            }
+        } else{
+            return view('products');
         }
     }
 }

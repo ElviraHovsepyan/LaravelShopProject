@@ -12,6 +12,56 @@ $.ajaxSetup({
 });
 
 
+////////////////////  chart
+
+var data;
+var popCanvas = $("#popChart");
+
+function getDiagram(key){
+    $.ajax({
+        url: '/chart',
+        type: 'post',
+        data: {key:key}
+    }).done(function (response) {
+        data = JSON.parse(response);
+        var barChart = new Chart(popCanvas, {
+            type: 'bar',
+            data: {
+                labels: ["Jenuary", "February", "March", "April", "May", "June", "July", "August", "September", "October","November","December"],
+                datasets: [{
+                    label: 'Added Products in '+key,
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                    ]
+                }]
+            }
+        });
+    });
+}
+
+$(document).ready(function () {
+    getDiagram(2018);
+});
+
+$('.selectYear').on('change',function () {
+    var key = $('.selectYear').val();
+    getDiagram(key);
+});
+
+
+
 /////////// price field
 
 $('#price').keypress(function(e){
@@ -186,7 +236,7 @@ var inProgress = false;
 var key = $('.search-query').val();
 
 $(window).scroll(function () {
-    if($(window).scrollTop() + $(window).height() + 200 >= $(document).height() && inProgress == false){
+    if($(window).scrollTop() + $(window).height() + 300 >= $(document).height() && inProgress == false){
         inProgress = true;
         $.ajax({
             url: '/scroll',
@@ -213,6 +263,7 @@ $(window).scroll(function () {
 });
 
 
+// var barChart = new Chart({...});
 
 
 

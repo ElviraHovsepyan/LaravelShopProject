@@ -23,6 +23,8 @@ Route::get('/logout',['uses'=>'RegisterController@logout','as'=>'logout']);
 Route::post('/search',['uses'=>'SearchController@search','as'=>'search']);
 Route::post('/searchAll',['uses'=>'SearchController@searchAll','as'=>'searchAll']);
 Route::post('/scroll',['uses'=>'ProductsController@scroll','as'=>'scroll']);
+Route::get('/chart',['uses'=>'ChartController@show','as'=>'chart']);
+Route::post('/chart',['uses'=>'ChartController@getData','as'=>'getData']);
 
 
 Route::group(['middleware'=>'auth'],function (){
@@ -35,6 +37,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/admin',['middleware'=>'isAdmin','uses'=>'AdminController@admin','as'=>'admin']);
     Route::post('/block',['middleware'=>'isAdmin','uses'=>'AdminController@block','as'=>'block']);
     Route::post('/unBlock',['middleware'=>'isAdmin','uses'=>'AdminController@unBlock','as'=>'unBlock']);
+    Route::get('/export',['middleware'=>'isAdmin','uses'=>'CsvController@exportCsv','as'=>'export']);
+    Route::get('/export/{id}',['middleware'=>'isAdmin','uses'=>'CsvController@exportCsvOne','as'=>'exportOne']);
+    Route::get('/import',['middleware'=>'isAdmin','uses'=>'CsvController@import','as'=>'import']);
 
 });
 

@@ -43,7 +43,6 @@ class ProductsController extends Controller
     }
 
     public function addNew(Request $request){
-
         $rules = [
             'name'=>'required|max:30',
             'price'=>'required|max:10',
@@ -56,7 +55,6 @@ class ProductsController extends Controller
             $errors = $validator->errors();
             return view('addNewItem')->withErrors($errors);
         }
-
         $all = $request->all();
         $name = $all['name'];
         $price = $all['price'];
@@ -83,7 +81,7 @@ class ProductsController extends Controller
         $name = $arr->name;
         $info = $arr->info;
         $price = $arr->price;
-            return view('updateView',['name'=>$name,'info'=>$info,'price'=>$price,'id'=>$uId]);
+        return view('updateView',['name'=>$name,'info'=>$info,'price'=>$price,'id'=>$uId]);
     }
 
     public function update(Request $request, $id){
