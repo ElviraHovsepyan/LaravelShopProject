@@ -215,7 +215,6 @@ $('.search-query').keyup(function(){
                 var product = JSON.parse(response);
                 $('.showResults').empty();
                 for(var x=0;x<product.length;x++){
-                    // var product = productFull[x].split('/');
                     $('.showResults').append('<a href="/productDetails/'+product[x]['id']+'"><p>'+product[x]['name']+'</p></a>');
                     $('.showResults').show();
                 }

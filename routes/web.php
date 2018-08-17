@@ -26,9 +26,7 @@ Route::post('/scroll',['uses'=>'ProductsController@scroll','as'=>'scroll']);
 Route::get('/chart',['uses'=>'ChartController@show','as'=>'chart']);
 Route::post('/chart',['uses'=>'ChartController@getData','as'=>'getData']);
 
-
 Route::group(['middleware'=>'auth'],function (){
-
     Route::get('/delete/{prId}',['uses'=>'PrDetailsController@deleteItem','as'=>'deleteItem']);
     Route::get('/addNew', ['uses'=>'ProductsController@showAdd','as'=>'addView']);
     Route::post('/addNew', ['uses'=>'ProductsController@addNew','as'=>'addNewItem']);
@@ -44,7 +42,6 @@ Route::group(['middleware'=>'auth'],function (){
 });
 
 Route::group(['prefix'=>'Api'],function (){
-
     Route::get('/token',['uses'=>'ApiController@token','as'=>'token']);
     Route::get('/products','ApiCOntroller@getProducts');
     Route::post('/products','ApiCOntroller@addProduct');

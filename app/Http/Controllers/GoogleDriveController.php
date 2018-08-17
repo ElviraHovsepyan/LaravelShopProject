@@ -30,9 +30,6 @@ class GoogleDriveController extends Controller
         }
     }
 
-    /**
-     * @param Request $request
-     */
     public function getGoogleDriveRedirectData(Request $request){
         if($request->has('code')){
             $code = $request->input('code');
@@ -108,16 +105,7 @@ class GoogleDriveController extends Controller
         $description = 'description';
         $filename = $picture->getClientOriginalName();
         $mimeType = $picture->getMimeType();
-
-
-//        $file = new \Google_Service_Drive_DriveFile($client);
-//        $file->setDescription($description);
-//        $file->setMimeType($mimeType);
-//        $file->setName($filename);
-
-   ///////////////////parent
         $parentId = '1bq2RX_oFMNC5dyJh9JJOlhZrwXe70AFx';
-
         $fileMetadata = new \Google_Service_Drive_DriveFile(array(
             'name' => $filename,
             'parents' => array($parentId)
@@ -128,21 +116,11 @@ class GoogleDriveController extends Controller
             'mimeType' => 'image/jpeg',
             'uploadType' => 'multipart',
             'fields' => 'id'));
-
-///////////////////////////////////////
-//        $data = file_get_contents($picture);
-//        $createdFile = $service->files->create($file, array(
-//            'data' => $data,
-//            'mimeType' => $mimeType,
-//            'uploadType'=>'media',
-//        ));
-
         return redirect()->route('index');
     }
 
 
     public function createFolder(){
-
         $client = $this->setGoogleClientToken();
         $service = new \Google_Service_Drive($client);
         $fileMetadata = new \Google_Service_Drive_DriveFile(array(
@@ -154,7 +132,6 @@ class GoogleDriveController extends Controller
     }
 
     public function moveBetweenFolders(){
-
         $client = $this->setGoogleClientToken();
         $service = new \Google_Service_Drive($client);
         $fileId = '1REYDqeVEnspCqSCRwDdmETrKOxOewVsl';
@@ -169,7 +146,4 @@ class GoogleDriveController extends Controller
         return redirect()->route('index');
     }
 }
-
-
-
 
