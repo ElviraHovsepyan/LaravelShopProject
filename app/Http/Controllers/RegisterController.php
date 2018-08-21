@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    //
-
     public function show()
     {
         return view('register');
@@ -31,22 +29,18 @@ class RegisterController extends Controller
             $errors = $validator->errors();
             return view('register')->withErrors($errors);
         }
-
         $name = $request->input('username');
         $email = $request->input('email');
         $password = $request->input('password');
-
-            $user = new User;
-            $user->name = $name;
-            $user->email = $email;
-            $password = Hash::make($password);
-            $user->password = $password;
-            $user->save();
-            $id = $user->id;
-            Auth::loginUsingId($id);
-
-            return redirect()->route('products');
-
+        $user = new User;
+        $user->name = $name;
+        $user->email = $email;
+        $password = Hash::make($password);
+        $user->password = $password;
+        $user->save();
+        $id = $user->id;
+        Auth::loginUsingId($id);
+        return redirect()->route('products');
     }
     public function login(Request $request){
         $name = $request->username;
@@ -55,7 +49,6 @@ class RegisterController extends Controller
             $hashedPassword = $check->password;
             $userId = $check->id;
             $password = $request->password;
-
             if(Hash::check($password, $hashedPassword)){
                 if($check->block == 1){
                     $error = 'Your account has been blocked';
@@ -65,7 +58,6 @@ class RegisterController extends Controller
                     return redirect()->route('products');
                 }
             };
-
         } else {
             return redirect()->route('products');
         }

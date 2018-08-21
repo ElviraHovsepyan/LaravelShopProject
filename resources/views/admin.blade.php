@@ -10,9 +10,9 @@
 
         @foreach($users as $user)
             @if($user->block == 0)
-            <h4>{{ $user->name }} <button class="btn" id="{{ $user->id }}">Block</button></h4>
+            <h4>{{ $user->name }} <button class="btn block-users" id="{{ $user->id }}">Block</button></h4>
             @else
-            <h4>{{ $user->name }} <button class="btn" id="{{ $user->id }}">Unblock</button></h4>
+            <h4>{{ $user->name }} <button class="btn block-users" id="{{ $user->id }}">Unblock</button></h4>
             @endif
         @endforeach
 

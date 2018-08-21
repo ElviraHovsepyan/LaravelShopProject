@@ -35,12 +35,9 @@
         <div class="span4">
             <form method="POST" class="search_form" action="{{ route('searchAll') }}">
                 {{ csrf_field() }}
-                <input name = 'searchName' value = "@if(!empty($key)){{ $key }} @endif" type="text" class="input-block-level search-query" Placeholder="eg. T-sirt" style="color:black; position:relative;">
+                <input name = 'searchName' value = "@if(!empty($key)){{ $key }} @endif" type="text" class="input-block-level search-query" Placeholder="eg. T-sirt" style="color:black; position:relative;" autocomplete="off">
                 <div class="showResults"></div>
-
             </form>
-
-
         </div>
         <div class="span8">
             <div class="account pull-right">
@@ -49,22 +46,19 @@
                     {{--<li><a href="#">My Account</a></li>--}}
 
                     @if(Auth::guest())
-
                         <li><a href="{{ route('registerView') }}">Login / Register</a></li>
-
                     @else
-                        @if(Auth::user()->role==1)
-                            <li>Hello Admin!</li>
-                            <li><a href="{{ route('admin') }}">Admin Page</a></li>
-
-                        @else
-                            <li>Hello {{Auth::user()->name}}</li>
-                        @endif
-                         <li><a href="{{ route('chart') }}">View Diagram</a></li>
+                            @if(Auth::user()->role==1)
+                                <li>Hello Admin!</li>
+                                <li><a href="{{ route('admin') }}">Admin Page</a></li>
+                            @else
+                                <li>Hello {{Auth::user()->name}}</li>
+                            @endif
+                        <li><a href="{{ route('showInvoices') }}">My invoices</a></li>
+                        <li><a href="{{ route('chart') }}">View Diagram</a></li>
                         <li><a href="{{ route('logout') }}">Log Out</a></li>
                         <li><a href="{{ route('token') }}">Get Token</a></li>
                         <li><a href="{{ route('index') }}">Google API</a></li>
-
                     @endif
                 </ul>
 

@@ -2,9 +2,6 @@
 @extends('layout')
 
 @section('content')
-
-
-
     <section class="header_text sub">
         <img class="pageBanner" src="/public/themes/images/pageBanner.png" alt="New products" >
         <h4><span>Product Details</span></h4>
@@ -16,18 +13,7 @@
                     <div class="span4">
                         <a href="/public/themes/images/ladies/1.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="/public/themes/images/prPics/{{ $pr['pic'] }}.jpg"></a>
                         <ul class="thumbnails small">
-                            {{--<li class="span1">--}}
-                                {{--<a href="#" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="themes/images/ladies/2.jpg" alt=""></a>--}}
-                            {{--</li>--}}
-                            {{--<li class="span1">--}}
-                                {{--<a href="themes/images/ladies/3.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 3"><img src="themes/images/ladies/3.jpg" alt=""></a>--}}
-                            {{--</li>--}}
-                            {{--<li class="span1">--}}
-                                {{--<a href="themes/images/ladies/4.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 4"><img src="themes/images/ladies/4.jpg" alt=""></a>--}}
-                            {{--</li>--}}
-                            {{--<li class="span1">--}}
-                                {{--<a href="themes/images/ladies/5.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 5"><img src="themes/images/ladies/5.jpg" alt=""></a>--}}
-                            {{--</li>--}}
+
                         </ul>
                     </div>
                     <div class="span5">
@@ -49,11 +35,12 @@
                                 <input type="checkbox" value=""> Be sure to include why it's great
                             </label>
                             <p>&nbsp;vddfmv mdfvfd n</p>
-                            {{--<label>Qty:</label>--}}
-                            {{--<input type="text" class="span1" placeholder="1">--}}
                             @if(Auth::user())
                             <a href="{{ route('updateView',['uId'=>$pr['id']]) }}"><button class="btn btn-inverse" type="button">----Edit----</button></a><br><br>
-                            <a href="{{ route('deleteItem',['prId'=>$pr['id']]) }}"><button class="btn btn-inverse" type="button">DELETE</button></a>
+                            <a href="{{ route('deleteItem',['prId'=>$pr['id']]) }}"><button class="btn btn-inverse" type="button">DELETE</button></a><br><br>
+                            <button class="btn btn-inverse addButton" type="button" productId = "{{ $pr['id'] }}">Add</button>
+                            <input type="number" id="quantity" name="quantity" min="1" max="50" step="1" value="1">
+
                             @endif
                         </form>
                     </div>

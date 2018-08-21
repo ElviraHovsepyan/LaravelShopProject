@@ -15,3 +15,26 @@
 .selectYear{
     color: black !important;
 }
+#quantity{
+    margin-left: 10px;
+    width: 50px;
+    height: 30px;
+}
+.buyProducts{
+    display: none;
+}
+.onePurchase{
+    border: 2px solid #eb4800;
+}
+.mainDiv{
+    width: 100%;
+    min-height: 140px !important;
+    margin-bottom: 100px!important;
+}
+.modalDiv{
+    /*width: 1040px;*/
+    /*left: 30%!important;*/
+    /*top: 3%!important;*/
+    /*position: absolute;*/
+    /*height: 1500px !important;*/
+}

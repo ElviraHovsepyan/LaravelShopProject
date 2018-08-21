@@ -12,7 +12,6 @@ class ApiController extends Controller
 {
     //
     public function token(){
-
         if(Auth::user()->token){
             echo Auth::user()->token;
         } else {
@@ -42,19 +41,16 @@ class ApiController extends Controller
         return json_encode($response);
     }
 
-
     public function getProduct(Request $request, $id){
         $responce = [];
-
         $token = $request->header('token');
         $check = User::where('token',$token)->first();
-
         if(!$check){
             $response = [
                 'message' => 'Correct Token is required',
                 'success' => false
             ];
-        } else if(!$id){                     ////// ?????????????
+        } else if(!$id){
             $response = [
                 'message' => 'Product id is required',
                 'success' => false
@@ -69,9 +65,7 @@ class ApiController extends Controller
         return json_encode($response);
     }
 
-
     public function addProduct(Request $request){
-
         $responce = [];
         $token = $request->header('token');
         $check = User::where('token',$token)->first();
@@ -88,46 +82,36 @@ class ApiController extends Controller
                 'pic'=>'image'
             ];
             $validator = Validator::make($request->all(), $rules);
-
             if ($validator->fails()) {
                 $errors = $validator->errors();
-
                 $response = [
                     'message' => $errors,
                     'success' => false
                 ];
-
             } else {
                 $name = $request->input('name');
                 $info = $request->input('info');
                 $price = $request->input('price');
                 $pic = $request->file('pic');
-
                 $pic->move('themes/images/prPics', $pic->getClientOriginalName());
                 $pic =  $pic->getClientOriginalName();
                 $pic = explode('.',$pic);
                 $pic = $pic[0];
-
                 $product = new Product;
                 $product->name = $name;
                 $product->info = $info;
                 $product->price = $price;
                 $product->pic = $pic;
                 $product->save();
-
                 $response = [
                     'success' => true
                 ];
             }
         }
-
         return json_encode($response);
     }
 
-
-
     public function editProduct(Request $request, $id){
-
         $responce = [];
         $token = $request->header('token');
         $check = User::where('token',$token)->first();
@@ -137,14 +121,12 @@ class ApiController extends Controller
                 'success' => false
             ];
         } else if(!$id){
-
             $response = [
                 'message' => 'Product id is required',
                 'success' => false
             ];
         }
         else {
-
             $rules = [
                 'name'=>'required|max:16',
                 'price'=>'required|max:14',
@@ -152,21 +134,16 @@ class ApiController extends Controller
                 'pic'=>'image|size:500'
             ];
             $validator = Validator::make($request->all(), $rules);
-
             if ($validator->fails()) {
                 $errors = $validator->errors();
-
                 $response = [
                     'message' => $errors,
                     'success' => false
                 ];
-
             } else {
-
                 $name = $request->input('name');
                 $info = $request->input('info');
                 $price = $request->input('price');
-
                 if(!empty($request->file('pic'))){
                     $pic = $request->file('pic');
                     $pic->move('themes/images/prPics', $pic->getClientOriginalName());
@@ -176,22 +153,18 @@ class ApiController extends Controller
                 } else {
                     $pic = Product::find($id)->pic;
                 }
-
-
                 $pic->move('themes/images/prPics', $pic->getClientOriginalName());
                 $pic =  $pic->getClientOriginalName();
                 $pic = explode('.',$pic);
                 $pic = $pic[0];
                 $product = Product::find($id);
                 if(!$product){
-
                 }
                 $product->name = $name;
                 $product->info = $info;
                 $product->price = $price;
                 $product->pic = $pic;
                 $product->save();
-
                 $response = [
                     'success' => true
                 ];
@@ -201,12 +174,9 @@ class ApiController extends Controller
     }
 
     public function deleteProduct(Request $request, $id){
-
         $responce = [];
-
         $token = $request->header('token');
         $check = User::where('token',$token)->first();
-
         if(!$check){
             $response = [
                 'message' => 'Correct Token is required',
@@ -225,7 +195,6 @@ class ApiController extends Controller
             ];
         }
         return json_encode($response);
-
     }
 }
 

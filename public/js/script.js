@@ -11,12 +11,9 @@ $.ajaxSetup({
     }
 });
 
-
 ////////////////////  chart
-
 var data;
 var popCanvas = $("#popChart");
-
 function getDiagram(key){
     $.ajax({
         url: '/chart',
@@ -60,8 +57,6 @@ $('.selectYear').on('change',function () {
     getDiagram(key);
 });
 
-
-
 /////////// price field
 
 $('#price').keypress(function(e){
@@ -85,12 +80,10 @@ $('#addForm').on('submit',function(e){
     setTimeout(function () {
         $('#submitButton').removeAttr('disabled');
     },3000);
-
     var name = $('#name').val();
     var price = $('#price').val();
     var info = $('#info').val();
     var pic = $('#pic')[0].files[0];
-
     if (name.length < 1) {
         $('.firstSpan').text(error1);
         $('.firstSpan').show();
@@ -125,7 +118,6 @@ $('#addForm').on('submit',function(e){
     data.append('price',price);
     data.append('info',info);
     if(pic) data.append('pic',pic);
-
     var id = $('#hideID').val();
     var hide = $('#hideInput').val();
     var url;
@@ -163,7 +155,7 @@ function ajaxRequest(url,data,hide){
 
 ///////////////////  block users
 
-$('.btn').click(function () {
+$('.block-users').click(function () {
     var btnValue = $(this).text();
     var id = $(this).attr('id');
     if(btnValue=='Block'){
@@ -189,17 +181,12 @@ $('.btn').click(function () {
     }
 });
 
-
-
-
 //////////////////  search
 
 $('body').click(function () {
     $('.showResults').hide();
 });
-
 $('.search-query').keyup(function(){
-
     var key = $('.search-query').val();
     if(key==''){
         $('.showResults').empty();
@@ -223,14 +210,12 @@ $('.search-query').keyup(function(){
     }
 });
 
-
 //////////////////// scroll
 
 var url = $(location).attr('pathname').split('/');
 var page = url[1];
 var id = url[2];
-
-var number = 3;
+var number = 6;
 var inProgress = false;
 var key = $('.search-query').val();
 
@@ -261,9 +246,61 @@ $(window).scroll(function () {
     }
 });
 
+////////////// add products
 
-// var barChart = new Chart({...});
+$('.addButton').click(function () {
+    localStorage.setItem('buy',1);
+    $('.buyProducts').show();
+    var quant = $('#quantity').val();
+    var id = $('.addButton').attr('productId');
+    var arr = JSON.parse(localStorage.getItem('basket'));
+    if(arr){
+        arr[id] = quant;
+    } else {
+        arr = {};
+        arr[id] = quant;
+    }
+    localStorage.setItem('basket',JSON.stringify(arr));
+});
 
+if(localStorage.getItem('buy')==1){
+    $('.buyProducts').show();
+} else {
+    $('.buyProducts').hide();
+}
+
+$('.buyProducts').click(function () {
+    $('.buyProducts').hide();
+    localStorage.removeItem('buy');
+    var arr = JSON.parse(localStorage.getItem('basket'));
+    $.ajax({
+        url:'/buy',
+        type:'post',
+        data: {arr:arr},
+    }).done(function(response){
+        console.log(response);
+        localStorage.removeItem('basket');
+    });
+});
+
+
+/////////show pdf
+
+$('.modalA').click(function () {
+    var key = $(this).text();
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/getInvoices/"+key, true);
+    xhr.responseType = "blob";
+    xhr.onload = function (e) {
+        if (this.status === 200) {
+            // console.log(this.response);
+            var file = new Blob([this.response], {type: 'application/pdf'});
+            var fileURL = URL.createObjectURL(file);
+            document.querySelector("iframe").src = fileURL;
+        }
+    };
+    xhr.send();
+});
 
 
 

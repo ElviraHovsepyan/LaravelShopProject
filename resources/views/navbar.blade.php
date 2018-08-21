@@ -6,6 +6,7 @@
         <nav id="menu" class="pull-right">
             <ul>
                 @if(Auth::user())
+                    <li class="buyProducts onePurchase"><a href="#">Buy</a></li>
                     <li><a href="{{ route('addNewItem') }}">Add new item</a> </li>
                 @endif
 

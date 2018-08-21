@@ -12,7 +12,7 @@ use Validator;
 class ProductsController extends Controller
 {
     public function show(){
-        $products = Product::take(3)->get();
+        $products = Product::take(6)->get();
         return view('products',['products'=>$products]);
     }
 
@@ -60,12 +60,10 @@ class ProductsController extends Controller
         $price = $all['price'];
         $info = $all['info'];
         $pic = $request->file('pic');
-
         $pic->move('themes/images/prPics', $pic->getClientOriginalName());
         $pic =  $pic->getClientOriginalName();
         $pic = explode('.',$pic);
         $pic = $pic[0];
-
         $product = new Product;
         $product->name = $name;
         $product->info = $info;
@@ -76,7 +74,6 @@ class ProductsController extends Controller
     }
 
     public function updateView($uId){
-
         $arr = Product::find($uId);
         $name = $arr->name;
         $info = $arr->info;
@@ -92,7 +89,6 @@ class ProductsController extends Controller
             'pic'=>'image'
         ];
         $validator = Validator::make($request->all(), $rules);
-
         $arr = Product::find($id);
         $name = $arr->name;
         $info = $arr->info;
@@ -101,14 +97,11 @@ class ProductsController extends Controller
             $errors = $validator->errors();
             return view('updateView',['name'=>$name,'info'=>$info,'price'=>$price,'id'=>$id])->withErrors($errors);
         }
-
         $all = $request->all();
-
         $name = $all['name'];
         $price = $all['price'];
         $info = $all['info'];
         $pic = $request->file('pic');
-
         if(!empty($request->file('pic'))){
             $pic = $request->file('pic');
             $pic->move('themes/images/prPics', $pic->getClientOriginalName());
@@ -118,19 +111,14 @@ class ProductsController extends Controller
         } else {
             $pic = Product::find($id)->pic;
         }
-
-
         $product = Product::find($id);
-
         $product->name = $name;
         $product->info = $info;
         $product->price = $price;
         $product->pic = $pic;
-
         $product->save();
         return json_encode('success');
         }
-
     }
 
 
