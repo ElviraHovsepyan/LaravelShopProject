@@ -49,7 +49,10 @@ function getDiagram(key){
 }
 
 $(document).ready(function () {
-    getDiagram(2018);
+    var url = $(location).attr('pathname').split('/');
+    if(url[1]=='chart'){
+        getDiagram(2018);
+    }
 });
 
 $('.selectYear').on('change',function () {
@@ -140,7 +143,7 @@ function ajaxRequest(url,data,hide){
         contentType: false,
         processData: false,
         success:function(response){
-            console.log(response);
+            // console.log(response);
             if(hide == 'insert'){
                 alert('You have added a new Item');
             } else if(hide == 'update') {
@@ -197,7 +200,7 @@ $('.search-query').keyup(function(){
             type: 'post',
             data: {search:key}
         }).done(function (response) {
-            console.log(response);
+            // console.log(response);
             if(response != ''){
                 var product = JSON.parse(response);
                 $('.showResults').empty();
@@ -215,20 +218,28 @@ $('.search-query').keyup(function(){
 var url = $(location).attr('pathname').split('/');
 var page = url[1];
 var id = url[2];
-var number = 6;
+var number;
+if(url[3]){
+   number = 6 + 3*url[3];
+} else {
+    number = 6;
+}
+
 var inProgress = false;
 var key = $('.search-query').val();
-
+var result = 0;
+var increase = 0;
 $(window).scroll(function () {
-    if($(window).scrollTop() + $(window).height() + 300 >= $(document).height() && inProgress == false){
+    if(($(window).scrollTop() + $(window).height() + 300 >= $(document).height()) && (inProgress == false) && (result == 0)){
         inProgress = true;
+        // console.log(number);
         $.ajax({
             url: '/scroll',
             type: 'post',
             data: {number:number, page:page, id:id, key:key}
         }).done(function (response) {
-            console.log(response);
-            if(response){
+            if(response.length > 2){
+                increase++;
                 var products = JSON.parse(response);
                 for(var i = 0; i < products.length; i++){
                     $('.main-products-page').append('<li class="span3">\n' +
@@ -239,6 +250,9 @@ $(window).scroll(function () {
                         '                        </div>\n' +
                         '                    </li>');
                 }
+                changeUrl(increase);
+            } else {
+                result = 1;
             }
             inProgress = false;
             number += 3;
@@ -284,15 +298,21 @@ $('.buyProducts').click(function () {
 });
 
 
-/////////show pdf
+/////////////////////show pdf
 
 $('.modalA').click(function () {
     var key = $(this).text();
+    showPdf(key);
+    changeUrl(key);
+});
+
+function showPdf(key){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/getInvoices/"+key, true);
     xhr.responseType = "blob";
     xhr.onload = function (e) {
         if (this.status === 200) {
+            $("#myModal").modal("show");
             // console.log(this.response);
             var file = new Blob([this.response], {type: 'application/pdf'});
             var fileURL = URL.createObjectURL(file);
@@ -300,9 +320,52 @@ $('.modalA').click(function () {
         }
     };
     xhr.send();
+}
+
+///////////////change URL
+
+var newUrl;
+function changeUrl(key) {
+    var oldUrl = $(location).attr('pathname');
+    var spl = oldUrl.split('/');
+    var method = spl[1];
+
+    if(page=='category' || page=='subCategory' || page=='products'){
+        var a = oldUrl.split(method);
+        var b = a[1].split('/');
+        // console.log(b);
+        if(b.length > 2){
+            var last = b[2];
+            newUrl = oldUrl.replace(last,'');
+            newUrl = newUrl+key;
+        } else {
+            newUrl = oldUrl+'/'+key;
+        }
+    } else if(page=='myInvoices'){
+        newUrl = oldUrl+'/'+key;
+    }
+    history.pushState({}, null, newUrl);
+}
+
+function urlReverse(){
+    var url = $(location).attr('pathname');
+    url = url.substr(0,11);
+    history.pushState({}, null, url);
+}
+
+$('#myModal').css('display','none');
+$('#myModal').on('hidden', function () {
+    urlReverse();
+    $('#myModal').css('display','none');
 });
 
+function checkUrl() {
+    var url = $(location).attr('pathname');
+    url = url.split('/');
 
-
-
-
+    if((url[1]=='myInvoices') && (url[2] != '')){
+        var key = url[2];
+        showPdf(key);
+    }
+}
+checkUrl();

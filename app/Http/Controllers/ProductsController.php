@@ -11,8 +11,12 @@ use Validator;
 
 class ProductsController extends Controller
 {
-    public function show(){
-        $products = Product::take(6)->get();
+    public function show($scroll = false){
+        $number = 6;
+        if($scroll){
+            $number = $number + (3 * $scroll);
+        }
+        $products = Product::take($number)->get();
         return view('products',['products'=>$products]);
     }
 

@@ -13,20 +13,16 @@
     <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/public/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="/public/themes/css/bootstrappage.css" rel="stylesheet"/>
-
     <!-- global styles -->
     <link href="/public/themes/css/flexslider.css" rel="stylesheet"/>
     <link href="/public/themes/css/main.css" rel="stylesheet"/>
     <link href="/public/css/style.css" rel="stylesheet"/>
     <!-- scripts -->
     <script src="/public/themes/js/jquery-1.7.2.min.js"></script>
-    <script src="/public/bootstrap/js/bootstrap.min.js"></script>
+    {{--<script src="bootstrap/js/bootstrap.min.js"></script>--}}
     <script src="/public/themes/js/superfish.js"></script>
     <script src="/public/themes/js/jquery.scrolltotop.js"></script>
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
+
 </head>
 <body>
 
@@ -176,11 +172,11 @@
                 <div class="span3">
                     <h4>Navigation</h4>
                     <ul class="nav">
-                        <li><a href="./index.html">Homepage</a></li>
-                        <li><a href="./about.html">About Us</a></li>
-                        <li><a href="./contact.html">Contac Us</a></li>
-                        <li><a href="./cart.html">Your Cart</a></li>
-                        <li><a href="./register.html">Login</a></li>
+                        <li><a href="#">Homepage</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contac Us</a></li>
+                        <li><a href="#">Your Cart</a></li>
+                        <li><a href="#">Login</a></li>
                     </ul>
                 </div>
                 <div class="span4">
@@ -209,11 +205,11 @@
             <span>Copyright 2013 bootstrappage template  All right reserved.</span>
         </section>
 </div>
-<script src="/public/themes/js/common.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
-<script src="/public/js/script.js"></script>
-
+        <script src="/public/themes/js/common.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/public/bootstrap/js/bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+        <script src="/public/js/script.js"></script>
 @show
 
 </body>

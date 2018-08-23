@@ -54,7 +54,7 @@ var adjustMenu = function() {
 }
 
 //Menu
-$('#menu > ul').superfish({ 
+$('#menu > ul').superfish({
 	delay:       100,                           
 	animation:   {opacity:'show', height:'show'}, 
 	speed:       'fast',

@@ -51,6 +51,7 @@ class PrDetailsController extends Controller
         }
         $this->createPdf($name);
     }
+
     public function createPdf($name){
         $usId = Auth::user()->id;
         $data = Purchase::where(['user_id'=>$usId,'inv_name'=>$name])->get();
@@ -69,15 +70,19 @@ class PrDetailsController extends Controller
         $invoice->save();
     }
 
-    public function showInvoices(){
+    public function showInvoices($key = false){
         $userId = Auth::user()->id;
         $invoices = Invoice::where('user_id',$userId)->get();
         return view('showInvoices')->withInvoices($invoices);
     }
 
     public function getInvoices($key){
-        $f = file_get_contents(storage_path('/invoices/'.$key.'.pdf'));
-        return $f;
+        $userId = Auth::user()->id;
+        $check = Invoice::where(['user_id'=>$userId,'inv_name'=>$key])->get();
+        if(!empty($check)){
+            $f = file_get_contents(storage_path('/invoices/'.$key.'.pdf'));
+            return $f;
+        }
     }
 }
 

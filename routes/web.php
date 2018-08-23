@@ -10,11 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/',['uses'=>'ProductsController@show','as'=>'products']);
+Route::get('/',function(){return redirect()->route('products');});
+Route::get('/products/all/{scroll?}',['uses'=>'ProductsController@show','as'=>'products']);
 Route::get('/productDetails/{id}',['uses'=>'PrDetailsController@show','as'=>'productDetails']);
-Route::get('/category/{id}',['uses'=>'CategoryController@category','as'=>'category']);
-Route::get('/subCategory/{id}',['uses'=>'CategoryController@show','as'=>'subCategory']);
+Route::get('/category/{id}/{scroll?}',['uses'=>'CategoryController@category','as'=>'category']);
+Route::get('/subCategory/{id}/{scroll?}',['uses'=>'CategoryController@show','as'=>'subCategory']);
 Route::get('/login',['uses'=>'RegisterController@show','as'=>'registerView']);
 Route::get('/register',['uses'=>'RegisterController@show','as'=>'registerView']);
 Route::post('/register',['uses'=>'RegisterController@register','as'=>'register']);
@@ -41,7 +41,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/add',['uses'=>'PrDetailsController@add','as'=>'add']);
     Route::post('/buy',['uses'=>'PrDetailsController@buy','as'=>'buy']);
     Route::get('/pdf/{name}',['uses'=>'PrDetailsController@createPdf','as'=>'createPdf']);
-    Route::get('/myInvoices',['uses'=>'PrDetailsController@showInvoices','as'=>'showInvoices']);
+    Route::get('/myInvoices/{key?}',['uses'=>'PrDetailsController@showInvoices','as'=>'showInvoices']);
     Route::get('/getInvoices/{key}',['uses'=>'PrDetailsController@getInvoices','as'=>'getInvoices']);
 
 });
@@ -63,11 +63,4 @@ Route::get('/drive', 'GoogleDriveController@getGoogleDriveRedirectData');
 Route::post('/google_upload',['uses'=>'GoogleDriveController@uploadFiles','as'=>'upload']);
 Route::get('/create_folder',['uses'=>'GoogleDriveController@createFolder','as'=>'createFolder']);
 Route::get('/move',['uses'=>'GoogleDriveController@moveBetweenFolders','as'=>'move']);
-
-
-
-
-
-
-
 

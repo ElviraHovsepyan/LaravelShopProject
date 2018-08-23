@@ -32,9 +32,8 @@
     margin-bottom: 100px!important;
 }
 .modalDiv{
-    /*width: 1040px;*/
-    /*left: 30%!important;*/
-    /*top: 3%!important;*/
-    /*position: absolute;*/
-    /*height: 1500px !important;*/
+    width: 1040px;
+    left: 30%!important;
+    top: 3%!important;
+    position: absolute;
 }
