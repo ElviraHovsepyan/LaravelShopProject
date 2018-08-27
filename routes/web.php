@@ -25,6 +25,7 @@ Route::post('/searchAll',['uses'=>'SearchController@searchAll','as'=>'searchAll'
 Route::post('/scroll',['uses'=>'ProductsController@scroll','as'=>'scroll']);
 Route::get('/chart',['uses'=>'ChartController@show','as'=>'chart']);
 Route::post('/chart',['uses'=>'ChartController@getData','as'=>'getData']);
+Route::post('/filter',['uses'=>'ProductsController@filter','as'=>'filter']);
 
 Route::group(['middleware'=>'auth'],function (){
     Route::get('/delete/{prId}',['uses'=>'PrDetailsController@deleteItem','as'=>'deleteItem']);

@@ -122,8 +122,23 @@ class ProductsController extends Controller
         $product->pic = $pic;
         $product->save();
         return json_encode('success');
-        }
+     }
+
+    public function filter(Request $request){
+       $subcatIds = $request->subcatIds;
+       if(!empty($request->pr)){
+           $price = $request->pr;
+           $products = Product::whereHas('Subcat',function ($query) use ($subcatIds,$price){
+               $query->whereIn('subcat.id', $subcatIds)->where('price','<', $price);
+           })->get();
+       } else {
+           $products = Product::whereHas('Subcat',function ($query) use ($subcatIds){
+               $query->whereIn('subcat.id', $subcatIds);
+           })->get();
+       }
+        return json_encode($products);
     }
+}
 
 
 

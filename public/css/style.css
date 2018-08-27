@@ -37,3 +37,46 @@
     top: 3%!important;
     position: absolute;
 }
+.dropLi{
+    padding: 5px;
+    cursor: pointer;
+}
+.firstLi{
+    padding: 5px 0;
+    cursor: pointer;
+
+}
+.priceDiv{
+    width: 250px;
+    height: 70px;
+    position: absolute;
+}
+#bg{
+    background: rgba(0,0,0,.1);
+    width: 200px ;
+    height: 3px;
+    border-radius: 100px;
+}
+#thumb{
+    height: 7px;
+    width: 7px;
+    background:  #999;
+    border-radius: 20px;
+    top: -2px;
+    left: 0px;
+    position: absolute;
+    cursor: pointer;
+}
+.ml{
+    float: left!important;
+}
+.mr{
+    float: right!important;
+}
+.secondCheck,.firstCheck{
+    margin-right: 5px !important;
+}
+.priceValue{
+    text-align: center;
+    margin-left: 15px;
+}

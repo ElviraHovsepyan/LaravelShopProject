@@ -17,15 +17,14 @@
     <link href="/public/themes/css/flexslider.css" rel="stylesheet"/>
     <link href="/public/themes/css/main.css" rel="stylesheet"/>
     <link href="/public/css/style.css" rel="stylesheet"/>
+    {{--jquery UI--}}
     <!-- scripts -->
     <script src="/public/themes/js/jquery-1.7.2.min.js"></script>
     {{--<script src="bootstrap/js/bootstrap.min.js"></script>--}}
     <script src="/public/themes/js/superfish.js"></script>
     <script src="/public/themes/js/jquery.scrolltotop.js"></script>
-
 </head>
 <body>
-
 <div id="top-bar" class="container">
     <div class="row">
         <div class="span4">
@@ -37,10 +36,8 @@
         </div>
         <div class="span8">
             <div class="account pull-right">
-
                 <ul class="user-menu">
                     {{--<li><a href="#">My Account</a></li>--}}
-
                     @if(Auth::guest())
                         <li><a href="{{ route('registerView') }}">Login / Register</a></li>
                     @else
@@ -57,43 +54,41 @@
                         <li><a href="{{ route('index') }}">Google API</a></li>
                     @endif
                 </ul>
-
             </div>
         </div>
     </div>
 </div>
 <div id="wrapper" class="container">
 
-
  @show
-
 
  @include('navbar')
 
  @yield('content')
 
  @section('rightBar')
-
-
         <div class="span3 col">
             <div class="block">
                 <ul class="nav nav-list">
-                    <li class="nav-header">SUB CATEGORIES</li>
-                    <li><a href="#">Nullam semper elementum</a></li>
-                    <li class="active"><a href="#">Phasellus ultricies</a></li>
-                    <li><a href="#">Donec laoreet dui</a></li>
-                    <li><a href="#">Nullam semper elementum</a></li>
-                    <li><a href="#">Phasellus ultricies</a></li>
-                    <li><a href="#">Donec laoreet dui</a></li>
+                    <li class="nav-header">CHOOSE CATEGORIES</li>
+                    @foreach($cats as $key=>$value)
+                        <li class="firstLi">
+                            <input type="checkbox" class="firstCheck" catId = {{ $value->id }}>{{ $value->cat_name }}
+                            <ul class="nav nav-list">
+                                @foreach($value->subcat as $k=>$v)
+                                    <li class="dropLi">
+                                        <input type="checkbox" checked class="secondCheck" subcatId = {{ $v->id }}>{{ $v->subcat_name }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
                 </ul>
                 <br/>
-                <ul class="nav nav-list below">
-                    <li class="nav-header">MANUFACTURES</li>
-                    <li><a href="#">Adidas</a></li>
-                    <li><a href="#">Nike</a></li>
-                    <li><a href="#">Dunlop</a></li>
-                    <li><a href="#">Yamaha</a></li>
-                </ul>
+                <p>Choose the price</p>
+                <span class="ml">Min: 0</span><span class="priceValue"></span><span class="mr">Max: 400</span>
+                <input id="priceInputRange" type="range" min="0" max="400" step="1"><br><br>
+                <button class="btn" id="filter">Choose</button>
             </div>
             <div class="block">
                 <h4 class="title">
@@ -156,16 +151,12 @@
                 </ul>
             </div>
         </div>
-
-
-
 </div>
 
 </section>
 @show
 
 @section('footer')
-
 
         <section id="footer-bar">
             <div class="row">

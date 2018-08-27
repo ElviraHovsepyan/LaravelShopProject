@@ -241,15 +241,7 @@ $(window).scroll(function () {
             if(response.length > 2){
                 increase++;
                 var products = JSON.parse(response);
-                for(var i = 0; i < products.length; i++){
-                    $('.main-products-page').append('<li class="span3">\n' +
-                        '                        <div class="product-box">\n' +
-                        '                            <a href="/productDetails/'+products[i]["id"]+'"><img alt="" src="/public/themes/images/prPics/'+products[i]["pic"]+'.jpg"></a><br/>\n' +
-                        '                            <a href="#" class="title">'+products[i]["name"]+'</a><br/>\n' +
-                        '                            <p class="price">'+products[i]["price"]+'</p>\n' +
-                        '                        </div>\n' +
-                        '                    </li>');
-                }
+                appendResults(products);
                 changeUrl(increase);
             } else {
                 result = 1;
@@ -292,7 +284,7 @@ $('.buyProducts').click(function () {
         type:'post',
         data: {arr:arr},
     }).done(function(response){
-        console.log(response);
+        // console.log(response);
         localStorage.removeItem('basket');
     });
 });
@@ -359,13 +351,78 @@ $('#myModal').on('hidden', function () {
     $('#myModal').css('display','none');
 });
 
+
+///////////////////// sort products
+
+ $('.firstCheck').prop('checked',true);
+ $('.firstCheck').on('change',function () {
+     if($(this).is(':checked')){
+         $(this).closest('li').find(".secondCheck").prop('checked',true);
+         $(this).prop('checked',true);
+     } else {
+         $(this).closest('li').find(".secondCheck").prop('checked',false);
+         $(this).prop('checked',false);
+     }
+ });
+
 function checkUrl() {
     var url = $(location).attr('pathname');
     url = url.split('/');
-
     if((url[1]=='myInvoices') && (url[2] != '')){
         var key = url[2];
         showPdf(key);
     }
+    if(url[1]=='category'){
+        $('.firstCheck').prop('checked',false);
+        $('.secondCheck').prop('checked',false);
+        var x = url[2]-1;
+        $('.firstCheck:eq('+x+')').prop('checked',true);
+        $('.firstCheck:eq('+x+')').closest('li').find(".secondCheck").prop('checked',true);
+        if((url[2])=='5'){
+            $('.firstCheck:eq(3)').prop('checked',true);
+            $('.firstCheck:eq(3)').closest('li').find(".secondCheck").prop('checked',true);
+        }
+    }
 }
 checkUrl();
+
+var priceResult;
+$('#priceInputRange').on('input',function () {
+    priceResult = parseFloat($('#priceInputRange').val());
+    $('.priceValue').text(priceResult);
+});
+$('#filter').click(function () {
+    var subcatIds = [];
+    result = 1;
+    priceResult = $('.priceValue').text();
+    if(priceResult != ''){
+        var pr = priceResult;
+    }
+   $('.secondCheck').each(function () {
+       if($(this).prop('checked') == true){
+           var subId = $(this).attr('subcatId');
+           subcatIds.push(subId);
+       }
+   });
+    $.ajax({
+        url:'/filter',
+        type:'post',
+        data:{subcatIds:subcatIds, pr:pr}
+    }).done(function (response) {
+        var products = JSON.parse(response);
+        $('.main-products-page').empty();
+        appendResults(products);
+    });
+});
+
+function appendResults(products){
+    for(var i = 0; i < products.length; i++){
+        $('.main-products-page').append('<li class="span3">\n' +
+            '                        <div class="product-box">\n' +
+            '                            <a href="/productDetails/'+products[i]["id"]+'"><img alt="" src="/public/themes/images/prPics/'+products[i]["pic"]+'.jpg"></a><br/>\n' +
+            '                            <a href="#" class="title">'+products[i]["name"]+'</a><br/>\n' +
+            '                            <p class="price">'+products[i]["price"]+'</p>\n' +
+            '                        </div>\n' +
+            '                    </li>');
+    }
+}
