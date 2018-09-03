@@ -12,5 +12,3 @@ class Category extends Model
         return $this->hasMany('App\Subcat','cat_id','id')->select(['id','subcat_name','cat_id']);
     }
 }
-
-

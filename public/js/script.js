@@ -200,7 +200,6 @@ $('.search-query').keyup(function(){
             type: 'post',
             data: {search:key}
         }).done(function (response) {
-            // console.log(response);
             if(response != ''){
                 var product = JSON.parse(response);
                 $('.showResults').empty();
@@ -284,7 +283,6 @@ $('.buyProducts').click(function () {
         type:'post',
         data: {arr:arr},
     }).done(function(response){
-        // console.log(response);
         localStorage.removeItem('basket');
     });
 });
@@ -388,7 +386,7 @@ checkUrl();
 
 var priceResult;
 $('#priceInputRange').on('input',function () {
-    priceResult = parseFloat($('#priceInputRange').val());
+    priceResult = $('#priceInputRange').val();
     $('.priceValue').text(priceResult);
 });
 $('#filter').click(function () {
@@ -421,8 +419,11 @@ function appendResults(products){
             '                        <div class="product-box">\n' +
             '                            <a href="/productDetails/'+products[i]["id"]+'"><img alt="" src="/public/themes/images/prPics/'+products[i]["pic"]+'.jpg"></a><br/>\n' +
             '                            <a href="#" class="title">'+products[i]["name"]+'</a><br/>\n' +
-            '                            <p class="price">'+products[i]["price"]+'</p>\n' +
+            '                            <p class="price">$'+products[i]["price"]+'</p>\n' +
             '                        </div>\n' +
             '                    </li>');
     }
 }
+
+
+

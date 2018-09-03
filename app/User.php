@@ -27,4 +27,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function message(){
+        return $this->hasMany('App\Message','user_id','id');
+    }
 }

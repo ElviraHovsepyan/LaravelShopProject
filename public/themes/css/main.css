@@ -327,7 +327,7 @@ section.navbar{
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
     padding: 0px;
     position: absolute;
-    min-width:170px;
+    min-width:150px;
 	display:none;
 }
 #menu > ul > li > ul{
@@ -525,7 +525,7 @@ section.our_client .row{
 	margin-bottom:0;
 }
 .search_form input{
-	background: url(../images/search.png) #fff no-repeat 97% 6px;
+	/*background: url(../images/search.png) #fff no-repeat 97% 6px;*/
 	color:#fff;
 	text-shadow:none;
 	padding-right:25px;	

@@ -41,12 +41,12 @@
                     @if(Auth::guest())
                         <li><a href="{{ route('registerView') }}">Login / Register</a></li>
                     @else
-                            @if(Auth::user()->role==1)
-                                <li>Hello Admin!</li>
-                                <li><a href="{{ route('admin') }}">Admin Page</a></li>
-                            @else
-                                <li>Hello {{Auth::user()->name}}</li>
-                            @endif
+                        @if(Auth::user()->role==1)
+                            <li>Hello Admin!</li>
+                            <li><a href="{{ route('admin') }}">Admin Page</a></li>
+                        @else
+                            <li>Hello {{Auth::user()->name}}</li>
+                        @endif
                         <li><a href="{{ route('showInvoices') }}">My invoices</a></li>
                         <li><a href="{{ route('chart') }}">View Diagram</a></li>
                         <li><a href="{{ route('logout') }}">Log Out</a></li>
@@ -67,6 +67,23 @@
  @yield('content')
 
  @section('rightBar')
+        @if(Auth::user())
+            <div class="chatDiv">
+                <div class="chatHead">
+                    <p>CHAT</p>
+                    <p class="usname" usId="{{ Auth::user()->id }}">{{Auth::user()->name}}</p>
+                </div>
+                <div class="chatBody">
+                </div>
+                <div class="formDiv">
+                    <form>
+                        <input type="text" id="message" autocomplete="off">
+                        <button class="btn" type="hidden"></button>
+                        <button class="sendButton">Send</button>
+                    </form>
+                </div>
+            </div>
+        @endif
         <div class="span3 col">
             <div class="block">
                 <ul class="nav nav-list">
@@ -199,8 +216,15 @@
         <script src="/public/themes/js/common.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="/public/bootstrap/js/bootstrap.js"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+       {{--------------socket ---------------}}
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
         <script src="/public/js/script.js"></script>
+        <script src="/public/js/chatSocket.js"></script>
+
 @show
 
 </body>

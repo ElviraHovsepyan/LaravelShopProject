@@ -44,6 +44,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/pdf/{name}',['uses'=>'PrDetailsController@createPdf','as'=>'createPdf']);
     Route::get('/myInvoices/{key?}',['uses'=>'PrDetailsController@showInvoices','as'=>'showInvoices']);
     Route::get('/getInvoices/{key}',['uses'=>'PrDetailsController@getInvoices','as'=>'getInvoices']);
+    Route::post('/chat',['uses'=>'ChatController@index','as'=>'chat']);
+    Route::post('/getUser',['uses'=>'ChatController@getUser','as'=>'getUser']);
 
 });
 
