@@ -33,13 +33,13 @@ class ProductsController extends Controller
         if($page=='category'){
             $products = Product::getCategoryProducts($id, $num);
         } else if($page=='subCategory'){
-            $products = Product::whereHas('Subcat',function ($query) use ($id){
+            $products = Product::with('Storage')->whereHas('Subcat',function ($query) use ($id){
                 $query->where('subcat.id', $id);
             })->take(3)->offset($num)->get();
         } else if($page=='searchAll') {
-            $products = Product::where("name","LIKE","%$key%")->take(3)->offset($num)->get();
+            $products = Product::with('Storage')->where("name","LIKE","%$key%")->take(3)->offset($num)->get();
         } else {
-            $products = Product::take(3)->offset($num)->get();
+            $products = Product::with('Storage')->take(3)->offset($num)->get();
         }
         if(!empty($discount) && $discount!=1){
             foreach($products as $product){
@@ -137,11 +137,11 @@ class ProductsController extends Controller
         $subcatIds = $request->subcatIds;
        if(!empty($request->pr)){
            $price = $request->pr;
-           $products = Product::whereHas('Subcat',function ($query) use ($subcatIds,$price){
+           $products = Product::with('Storage')->whereHas('Subcat',function ($query) use ($subcatIds,$price){
                $query->whereIn('subcat.id', $subcatIds)->where('price','<', $price);
            })->get();
        } else {
-           $products = Product::whereHas('Subcat',function ($query) use ($subcatIds){
+           $products = Product::with('Storage')->whereHas('Subcat',function ($query) use ($subcatIds){
                $query->whereIn('subcat.id', $subcatIds);
            })->get();
        }

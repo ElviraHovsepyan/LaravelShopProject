@@ -27,7 +27,7 @@ class CategoryController extends Controller
         if($scroll){
             $number = $number + (3 * $scroll);
         }
-        $products = Product::whereHas('Subcat', function ($query) use ($id){
+        $products = Product::with('Storage')->whereHas('Subcat', function ($query) use ($id){
             $query->where('cat_id', $id);
         })->take($number)->get();
         return view('products')->withProducts($products)->withDiscount($discount);

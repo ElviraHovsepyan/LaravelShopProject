@@ -17,7 +17,7 @@ class Product extends Model
  }
 
  public static function getCategoryProducts($id, $num){
-     return Product::whereHas('Subcat', function ($query) use ($id){
+     return Product::with('Storage')->whereHas('Subcat', function ($query) use ($id){
          $query->where('cat_id', $id);
      })->take(3)->offset($num)->get();
  }
