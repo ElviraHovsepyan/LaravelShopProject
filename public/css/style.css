@@ -85,12 +85,15 @@
     bottom: 0;
     right: 79px;
     width: 280px;
-    height: 360px;
+    height: 60px;
     background-color: white;
     z-index: 777;
     border:2px solid #eb4800;
     box-sizing: border-box;
     padding-bottom: 50px;
+}
+.chatDiv form{
+    display: none;
 }
 .chatHead{
     height: 60px;
@@ -138,4 +141,15 @@
 .formDiv{
     height: 30px;
     width: 100%;
+}
+.noExists{
+    color: red;
+    margin: 5px 0;
+    position: absolute;
+    bottom: 2px;
+    left: 62px;
+}
+.exists{
+    color: black;
+    left: 102px;
 }

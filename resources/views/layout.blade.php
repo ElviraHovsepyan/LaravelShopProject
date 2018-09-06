@@ -43,7 +43,6 @@
                     @else
                         @if(Auth::user()->role==1)
                             <li>Hello Admin!</li>
-                            <li><a href="{{ route('admin') }}">Admin Page</a></li>
                         @else
                             <li>Hello {{Auth::user()->name}}</li>
                         @endif

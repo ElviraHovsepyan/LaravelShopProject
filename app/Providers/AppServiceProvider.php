@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Promocode;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -22,10 +25,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        //
         View::share('cats',$this->getCategories());
         Schema::defaultStringLength(191);
-
     }
 
     /**
@@ -38,12 +39,11 @@ class AppServiceProvider extends ServiceProvider
         //
     }
     public function getCategories(){
-
         $cats = Category::with('Subcat')
                 ->with('Subcat.Products')->get();
-
         return $cats;
     }
+
 
 }
 

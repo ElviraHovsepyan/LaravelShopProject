@@ -6,21 +6,24 @@ use App\Category;
 use App\Subcat;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Http\Services\Service;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class ProductsController extends Controller
 {
     public function show($scroll = false){
+        $discount = Service::getDiscount();
         $number = 6;
         if($scroll){
             $number = $number + (3 * $scroll);
         }
-        $products = Product::take($number)->get();
-        return view('products',['products'=>$products]);
+        $products = Product::with('Storage')->take($number)->get();
+        return view('products',['products'=>$products,'discount'=>$discount]);
     }
 
     public function scroll(Request $request){
+        $discount = Service::getDiscount();
         $num = $request->number;
         $page = $request->page;
         $id = $request->id;
@@ -37,6 +40,11 @@ class ProductsController extends Controller
             $products = Product::where("name","LIKE","%$key%")->take(3)->offset($num)->get();
         } else {
             $products = Product::take(3)->offset($num)->get();
+        }
+        if(!empty($discount) && $discount!=1){
+            foreach($products as $product){
+                $product->price = ($product->price)-($product->price)*$discount;
+            }
         }
         $products = json_encode($products);
         return $products;
@@ -125,7 +133,8 @@ class ProductsController extends Controller
      }
 
     public function filter(Request $request){
-       $subcatIds = $request->subcatIds;
+        $discount = Service::getDiscount();
+        $subcatIds = $request->subcatIds;
        if(!empty($request->pr)){
            $price = $request->pr;
            $products = Product::whereHas('Subcat',function ($query) use ($subcatIds,$price){
@@ -136,6 +145,11 @@ class ProductsController extends Controller
                $query->whereIn('subcat.id', $subcatIds);
            })->get();
        }
+        if(!empty($discount) && $discount!=1) {
+            foreach ($products as $product) {
+                $product->price = ($product->price) - ($product->price) * $discount;
+            }
+        }
         return json_encode($products);
     }
 }

@@ -34,6 +34,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/update/{uId}', ['uses'=>'ProductsController@updateView','as'=>'updateView']);
     Route::post('/update/{id}', ['uses'=>'ProductsController@update','as'=>'update']);
     Route::get('/admin',['middleware'=>'isAdmin','uses'=>'AdminController@admin','as'=>'admin']);
+    Route::get('/promocode',['middleware'=>'isAdmin','uses'=>'AdminController@promocodes','as'=>'promocodes']);
+    Route::post('/promocode',['middleware'=>'isAdmin','uses'=>'AdminController@editPromocodes','as'=>'editPromocodes']);
     Route::post('/block',['middleware'=>'isAdmin','uses'=>'AdminController@block','as'=>'block']);
     Route::post('/unBlock',['middleware'=>'isAdmin','uses'=>'AdminController@unBlock','as'=>'unBlock']);
     Route::get('/export',['middleware'=>'isAdmin','uses'=>'CsvController@exportCsv','as'=>'export']);
@@ -46,6 +48,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/getInvoices/{key}',['uses'=>'PrDetailsController@getInvoices','as'=>'getInvoices']);
     Route::post('/chat',['uses'=>'ChatController@index','as'=>'chat']);
     Route::post('/getUser',['uses'=>'ChatController@getUser','as'=>'getUser']);
+    Route::get('/storage',['middleware'=>'isAdmin','uses'=>'AdminController@storage','as'=>'storage']);
+    Route::post('/quant',['middleware'=>'isAdmin','uses'=>'AdminController@setQuantity','as'=>'quantity']);
+
 
 });
 

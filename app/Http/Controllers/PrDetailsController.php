@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Services\Service;
 use App\Invoice;
 use App\Purchase;
+use App\Storage;
 use App\Subcat;
 use App\Product;
 
@@ -18,9 +20,11 @@ use Illuminate\Support\Facades\Auth;
 class PrDetailsController extends Controller
 {
     public function show($id){
-        $pr = Product::find($id);
+        $pr = Product::with('Storage')->find($id);
+        $discount = Service::getDiscount();
+
         if($pr != null){
-            return view('productDetails')->withPr($pr);
+            return view('productDetails')->withPr($pr)->withDiscount($discount);
         } else {
             abort(404);
         }
@@ -48,8 +52,17 @@ class PrDetailsController extends Controller
              $obj->el_price = $product->price;
              $obj->total_price = ($product->price)*($value);
              $obj->save();
+             $this->saveInStorage($key, $value);
         }
         $this->createPdf($name);
+    }
+
+    public function saveInStorage($key, $value){
+        $storage = Storage::where('product_id',$key)->first();
+        $quant = $storage->quantity;
+        $rest = $quant - $value;
+        $storage->quantity = $rest;
+        $storage->save();
     }
 
     public function createPdf($name){

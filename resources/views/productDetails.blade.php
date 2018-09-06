@@ -23,7 +23,13 @@
                             <strong>Reward Points:</strong> <span>0</span><br>
                             <strong>Availability:</strong> <span>Out Of Stock</span><br>
                         </address>
-                        <h4><strong>Price: ${{ $pr['price'] }}</strong></h4>
+                        <h4><strong>Price:
+                                @if(Auth::user() && $discount!=1)
+                                    ${{ ($pr['price'])-($pr['price'])*$discount }}
+                                @else
+                                    ${{ $pr['price'] }}
+                                @endif
+                            </strong></h4>
                     </div>
                     <div class="span5">
                         <form class="form-inline">
@@ -33,13 +39,13 @@
                             <br/>
                             <label class="checkbox">
                                 <input type="checkbox" value=""> Be sure to include why it's great
-                            </label>
-                            <p>&nbsp;vddfmv mdfvfd n</p>
+                            </label><br><br>
+                            <p>Available: {{ $pr['storage']->quantity }}</p>
                             @if(Auth::user())
                             <a href="{{ route('updateView',['uId'=>$pr['id']]) }}"><button class="btn btn-inverse" type="button">----Edit----</button></a><br><br>
                             <a href="{{ route('deleteItem',['prId'=>$pr['id']]) }}"><button class="btn btn-inverse" type="button">DELETE</button></a><br><br>
                             <button class="btn btn-inverse addButton" type="button" productId = "{{ $pr['id'] }}">Add</button>
-                            <input type="number" id="quantity" name="quantity" min="1" max="50" step="1" value="1">
+                            <input type="number" id="quantity" name="quantity" min="1" max="{{ $pr['storage']->quantity }}" step="1" value="1">
 
                             @endif
                         </form>

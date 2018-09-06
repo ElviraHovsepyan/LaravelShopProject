@@ -18,7 +18,18 @@
                                  <span class="sale_tag"></span>
                                  <a href="{{ route('productDetails',['id'=>$product->id]) }}"><img alt="" src="/public/themes/images/prPics/{{ $product->pic }}.jpg"></a><br/>
                                  <a href="#" class="title">{{ $product->name }}</a><br/>
-                                 <p class="price"> ${{ $product->price }}</p>
+                                 <p class="price">
+                                     @if(Auth::user() && $discount!=1)
+                                     ${{ ($product->price)-($product->price)*$discount }}
+                                     @else
+                                       ${{ $product->price }}
+                                     @endif
+                                 </p>
+                                 @if($product['storage']->quantity < 1)
+                                    <p class="noExists">No exists at this moment</p>
+                                 @else
+                                     <p class="noExists exists">Available: {{ $product['storage']->quantity }}</p>
+                                 @endif
                              </div>
                          </li>
                      @endforeach

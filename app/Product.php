@@ -22,6 +22,10 @@ class Product extends Model
      })->take(3)->offset($num)->get();
  }
 
+ public function Storage(){
+     return $this->hasOne('App\Storage');
+ }
+
 }
 
 

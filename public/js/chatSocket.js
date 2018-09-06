@@ -2,12 +2,12 @@
 var h = 0;
 $('.chatHead').click(function () {
     if(h==0){
-        $('.chatDiv').animate({'height':'60px'},1000);
-        $('.chatDiv form').hide();
-        h=1;
-    } else {
         $('.chatDiv').animate({'height':'360px'},1000);
         $('.chatDiv form').show(1000);
+        h=1;
+    } else {
+        $('.chatDiv').animate({'height':'60px'},1000);
+        $('.chatDiv form').hide(1000);
         h=0;
     }
 });
@@ -52,6 +52,7 @@ $(document).ready(function () {
 $('.sendButton').click(function (e) {
     e.preventDefault();
     useSocket();
+    sendMessageToMe();
 });
 $('#message').keypress(function (e) {
     if(e.keyCode==13){

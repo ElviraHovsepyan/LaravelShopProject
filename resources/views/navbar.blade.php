@@ -5,6 +5,16 @@
         <a href="{{ route('products') }}" class="logo pull-left"><img src="/public/themes/images/logo.png" class="site_logo" alt=""></a>
         <nav id="menu" class="pull-right">
             <ul>
+                @if(Auth::user() && Auth::user()->role==1)
+                    <li><a href="#">Admin Pages</a>
+                        <ul>
+                            <li><a href="{{ route('admin') }}">Block Users</a>
+                            <li><a href="{{ route('promocodes') }}">Promocodes</a>
+                            <li><a href="{{ route('storage') }}">Storage</a>
+
+                        </ul>
+                    </li>
+                @endif
                 @if(Auth::user())
                     <li class="buyProducts onePurchase"><a href="#">Buy</a></li>
                     <li><a href="{{ route('addNewItem') }}">Add new item</a> </li>

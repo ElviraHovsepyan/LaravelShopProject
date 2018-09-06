@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Promocode;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         return view('register');
     }
@@ -42,7 +44,15 @@ class RegisterController extends Controller
         Auth::loginUsingId($id);
         return redirect()->route('products');
     }
+
     public function login(Request $request){
+        if(isset($request->hiddenInput)){
+            $promocode = $request->hiddenInput;
+            $checkPr = Promocode::where('promocode',$promocode)->first();
+            if(!empty($checkPr)){
+                $promocode_id = $checkPr->id;
+            }
+        }
         $name = $request->username;
         $check = User::where('name',$name)->first();
         if($check != null){
@@ -55,9 +65,15 @@ class RegisterController extends Controller
                     return view('register')->withError($error);
                 } else {
                     Auth::loginUsingId($userId);
+                    if($check->promocode_id == '' && isset($promocode_id)){
+                        $time = Carbon::now()->toDateTimeString();
+                        $check->promocode_id = $promocode_id;
+                        $check->start_date = $time;
+                        $check->save();
+                    }
                     return redirect()->route('products');
                 }
-            };
+            }
         } else {
             return redirect()->route('products');
         }
