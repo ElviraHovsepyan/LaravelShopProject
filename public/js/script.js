@@ -11,56 +11,7 @@ $.ajaxSetup({
     }
 });
 
-////////////////////  chart
-var data;
-var popCanvas = $("#popChart");
-function getDiagram(key){
-    $.ajax({
-        url: '/chart',
-        type: 'post',
-        data: {key:key}
-    }).done(function (response) {
-        data = JSON.parse(response);
-        var barChart = new Chart(popCanvas, {
-            type: 'bar',
-            data: {
-                labels: ["Jenuary", "February", "March", "April", "May", "June", "July", "August", "September", "October","November","December"],
-                datasets: [{
-                    label: 'Added Products in '+key,
-                    data: data,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(153, 102, 255, 0.6)',
-                        'rgba(255, 159, 64, 0.6)',
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(153, 102, 255, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                    ]
-                }]
-            }
-        });
-    });
-}
-
-$(document).ready(function () {
-    var url = $(location).attr('pathname').split('/');
-    if(url[1]=='chart'){
-        getDiagram(2018);
-    }
-});
-
-$('.selectYear').on('change',function () {
-    var key = $('.selectYear').val();
-    getDiagram(key);
-});
-
-/////////// price field
+/////////////////////////////////// price field
 
 $('#price').keypress(function(e){
     var dotExist = (e.target.value.indexOf('.') !== -1);
@@ -71,7 +22,7 @@ $('#price').keypress(function(e){
     }
 });
 
-/////////////// validation
+///////////////////////////////////// validation
 
 $('input,textarea').keydown(function () {
     $(this).next().hide();
@@ -287,7 +238,6 @@ $('.buyProducts').click(function () {
     });
 });
 
-
 /////////////////////show pdf
 
 $('.modalA').click(function () {
@@ -323,7 +273,6 @@ function changeUrl(key) {
     if(page=='category' || page=='subCategory' || page=='products'){
         var a = oldUrl.split(method);
         var b = a[1].split('/');
-        // console.log(b);
         if(b.length > 2){
             var last = b[2];
             newUrl = oldUrl.replace(last,'');
@@ -481,4 +430,3 @@ $('.editStorage').click(function () {
         console.log(response);
     });
 });
-

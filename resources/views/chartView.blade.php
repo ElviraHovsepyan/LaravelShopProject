@@ -10,6 +10,7 @@
         @endfor
     </select>
 </form>
+
 <canvas id="popChart" width="600" height="400"></canvas>
 
 @endsection

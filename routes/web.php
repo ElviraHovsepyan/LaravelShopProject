@@ -50,8 +50,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/getUser',['uses'=>'ChatController@getUser','as'=>'getUser']);
     Route::get('/storage',['middleware'=>'isAdmin','uses'=>'AdminController@storage','as'=>'storage']);
     Route::post('/quant',['middleware'=>'isAdmin','uses'=>'AdminController@setQuantity','as'=>'quantity']);
-
-
+    Route::get('/sale',['middleware'=>'isAdmin','uses'=>'AdminController@sale','as'=>'sale']);
+    Route::post('/sale',['middleware'=>'isAdmin','uses'=>'AdminController@getBestSales','as'=>'getSale']);
 });
 
 Route::group(['prefix'=>'Api'],function (){

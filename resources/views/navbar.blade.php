@@ -1,5 +1,4 @@
 
-
 <section class="navbar main-menu">
     <div class="navbar-inner main-menu">
         <a href="{{ route('products') }}" class="logo pull-left"><img src="/public/themes/images/logo.png" class="site_logo" alt=""></a>
@@ -8,9 +7,10 @@
                 @if(Auth::user() && Auth::user()->role==1)
                     <li><a href="#">Admin Pages</a>
                         <ul>
-                            <li><a href="{{ route('admin') }}">Block Users</a>
-                            <li><a href="{{ route('promocodes') }}">Promocodes</a>
-                            <li><a href="{{ route('storage') }}">Storage</a>
+                            <li><a href="{{ route('admin') }}">Block Users</a></li>
+                            <li><a href="{{ route('promocodes') }}">Promocodes</a></li>
+                            <li><a href="{{ route('storage') }}">Storage</a></li>
+                            <li><a href="{{ route('sale') }}">Best Sellers</a></li>
 
                         </ul>
                     </li>
@@ -36,7 +36,3 @@
         </nav>
     </div>
 </section>
-
-
-
-

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Promocode;
+use App\Purchase;
 use App\Storage;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AdminController extends Controller
 {
@@ -63,6 +66,39 @@ class AdminController extends Controller
         $storage->quantity = $quantity;
         $storage->save();
         return 'success';
+    }
+
+    public function sale(){
+        return view('pieChart');
+    }
+
+    public function getBestSales(Request $request){
+        $key1 = $request->key1;
+        if($key1==1){
+            $start = Carbon::now()->startOfMonth()->subMonth()->toDateTimeString();
+        } else {
+            $start = Carbon::now()->startOfMonth()->subMonths(4)->toDateTimeString();
+        }
+        $end = Carbon::now()->endOfMonth()->subMonth()->toDateTimeString();
+        $count = [];
+        for($i=1;$i<77;$i++){
+            $a = 0;
+            $products = Purchase::whereBetween('created_at',[$start,$end])->where('el_id',$i)->get();
+            foreach($products as $product){
+                $a += $product->quantity;
+            }
+            if($a>=5) {
+                $count[$product->el_name] = $a;
+            }
+        }
+        $arr = [];
+        for($j=0; $j<5; $j++ ){
+            $max_value = max($count);
+            $key = array_search ($max_value, $count);
+            $arr[$key]=$max_value;
+            unset($count[$key]);
+        }
+        return json_encode($arr);
     }
 }
 
