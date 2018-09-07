@@ -173,8 +173,11 @@
 @show
 
 @section('footer')
-
         <section id="footer-bar">
+            <p class="subscribe">Subscribe to get last news</p>
+            <input type="mail" placeholder="Add your Email here" id="subscribe" autocomplete="off">
+            <button class="btn hideB" type="hidden"></button>
+            <button class="sendSubscribe">Subscribe</button><br><br>
             <div class="row">
                 <div class="span3">
                     <h4>Navigation</h4>

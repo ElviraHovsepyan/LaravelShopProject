@@ -153,3 +153,10 @@
     color: black;
     left: 102px;
 }
+.hideB{
+    display: none;
+}
+.subscribe{
+    color: white;
+    font-size: 14px;
+}

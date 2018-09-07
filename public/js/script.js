@@ -430,3 +430,11 @@ $('.editStorage').click(function () {
         console.log(response);
     });
 });
+
+////////////////////////subscriptions
+
+$('.sendSubscribe').click(function () {
+    var value = $('#subscribe').val();
+    alert(value);
+});
+
