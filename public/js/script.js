@@ -392,26 +392,28 @@ function appendResults(products){
 /////////////////// promocodes
 
 $('.editPromocode').click(function () {
+    var id = $(this).attr('promId');
     var name = $(this).parent().siblings().children('.nameInput').val();
     var active = $(this).parent().siblings().children('.activeInput').val();
     var discount = $(this).parent().siblings().children('.discInput').val();
     var period = $(this).parent().siblings().children('.periodInput').val();
-    sendPromocodes(name,active,discount,period);
+    sendPromocodes(name,active,discount,period,id);
 });
 
 $('.addPromocode').click(function(){
+    var id = 0;
     var name = $(this).parent().siblings().children('.nameInput').val();
     var active = $(this).parent().siblings().children('.activeInput').val();
     var discount = $(this).parent().siblings().children('.discInput').val();
     var period = $(this).parent().siblings().children('.periodInput').val();
-    sendPromocodes(name,active,discount,period);
+    sendPromocodes(name,active,discount,period,id);
 });
 
-function sendPromocodes(name,active,discount,period){
+function sendPromocodes(name,active,discount,period,id){
     $.ajax({
         url:'/promocode',
         type:'post',
-        data:{name:name,active:active,discount:discount,period:period}
+        data:{name:name,active:active,discount:discount,period:period,id:id}
     }).done(function(response){
         console.log(response);
     });
@@ -434,7 +436,63 @@ $('.editStorage').click(function () {
 ////////////////////////subscriptions
 
 $('.sendSubscribe').click(function () {
-    var value = $('#subscribe').val();
-    alert(value);
+    var email = $('#subscribe').val();
+    var valid =  validateEmail(email);
+    if(valid){
+        $.ajax({
+            url:'/subscribe',
+            type: 'post',
+            data: {email:email}
+        }).done(function(response){
+            var sub = JSON.parse(response);
+            console.log(sub);
+            $('.alertResponse').text(sub);
+        });
+    } else {
+        alert('Please enter a valid Email');
+    }
 });
 
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+$('.editSubscription').click(function () {
+    var id = $(this).attr('subscrId');
+    var header = $(this).parent().siblings().children('.headerInput').val();
+    var body = $(this).parent().siblings().children('.bodyInput').val();
+    var active = $(this).parent().siblings().children('.activeInput').val();
+    var date = $(this).parent().siblings().children('.dateInput').val();
+    sendSubscription(header,body,active,date,id);
+});
+
+$('.addSubscription').click(function () {
+    var id = 0;
+    var header = $(this).parent().siblings().children('.headerInput').val();
+    var body = $(this).parent().siblings().children('.bodyInput').val();
+    var active = $(this).parent().siblings().children('.activeInput').val();
+    var date = $(this).parent().siblings().children('.dateInput').val();
+    sendSubscription(header,body,active,date,id);
+});
+
+function sendSubscription(header,body,active,date,id){
+    $.ajax({
+        url:'/subscrAdmin',
+        type:'post',
+        data:{header:header,body:body,active:active,date:date,id:id}
+    }).done(function(response){
+        console.log(response);
+    });
+}
+
+$('.deleteSub').click(function () {
+    var id = $(this).attr('subscrId');
+    $.ajax({
+        url:'/delSub',
+        type:'post',
+        data:{id:id}
+    }).done(function (response) {
+        console.log(response);
+    });
+});

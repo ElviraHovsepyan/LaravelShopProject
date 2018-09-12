@@ -52,6 +52,12 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/quant',['middleware'=>'isAdmin','uses'=>'AdminController@setQuantity','as'=>'quantity']);
     Route::get('/sale',['middleware'=>'isAdmin','uses'=>'AdminController@sale','as'=>'sale']);
     Route::post('/sale',['middleware'=>'isAdmin','uses'=>'AdminController@getBestSales','as'=>'getSale']);
+    Route::get('/subscrAdmin',['middleware'=>'isAdmin','uses'=>'AdminController@subscriptions','as'=>'subscriptions']);
+    Route::post('/subscrAdmin',['middleware'=>'isAdmin','uses'=>'AdminController@editSubscriptions','as'=>'editSubscriptions']);
+    Route::post('/delSub',['middleware'=>'isAdmin','uses'=>'AdminController@deleteSubscriptions','as'=>'deleteSubscriptions']);
+
+    Route::post('/subscribe',['uses'=>'SubscribeController@subscribe','as'=>'subscribe']);
+
 });
 
 Route::group(['prefix'=>'Api'],function (){

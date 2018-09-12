@@ -21,7 +21,7 @@
                     <td><input type="text" value="{{ $promocode->is_active }}" class="activeInput"></td>
                     <td><input type="text" value="{{ $promocode->discount }}" class="discInput"></td>
                     <td><input type="text" value="{{ $promocode->period_months }}" class="periodInput"></td>
-                    <td><button class="btn editPromocode">Edit</button></td>
+                    <td><button class="btn editPromocode" promId="{{ $promocode->id }}">Edit</button></td>
                 </tr>
             @endforeach
             <tr>

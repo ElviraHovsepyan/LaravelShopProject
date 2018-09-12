@@ -11,6 +11,7 @@
                             <li><a href="{{ route('promocodes') }}">Promocodes</a></li>
                             <li><a href="{{ route('storage') }}">Storage</a></li>
                             <li><a href="{{ route('sale') }}">Best Sellers</a></li>
+                            <li><a href="{{ route('subscriptions') }}">Subscriptions</a></li>
 
                         </ul>
                     </li>

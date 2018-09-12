@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Subcat;
+use App\Subscription;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Services\Service;

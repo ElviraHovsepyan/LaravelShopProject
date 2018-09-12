@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\Discount',
+        'App\Console\Commands\SendEmails',
     ];
 
     /**
@@ -24,9 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
         $schedule->command('products:discount')->everyMinute();
-
+        $schedule->command('send:emails')->daily();
     }
 
     /**

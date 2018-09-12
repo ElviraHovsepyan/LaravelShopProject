@@ -6,6 +6,7 @@ use App\Product;
 use App\Promocode;
 use App\Purchase;
 use App\Storage;
+use App\Subscription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -41,10 +42,12 @@ class AdminController extends Controller
         $active = $request->active;
         $discount = $request->discount;
         $period = $request->period;
+        $id = $request->id;
 
-        $promocode = Promocode::where('promocode',$name)->first();
-        if($promocode==null){
+        if($id==0){
             $promocode = new Promocode;
+        } else {
+            $promocode = Promocode::find($id);
         }
         $promocode->promocode = $name;
         $promocode->is_active = $active;
@@ -99,6 +102,38 @@ class AdminController extends Controller
             unset($count[$key]);
         }
         return json_encode($arr);
+    }
+
+    public function subscriptions(){
+        $subscriptions = Subscription::all();
+        return view('subscriptions')->withSubscriptions($subscriptions);
+    }
+
+    public function editSubscriptions(Request $request){
+        $header = $request->header;
+        $body = $request->body;
+        $active = $request->active;
+        $date = $request->date;
+        $id = $request->id;
+        if($id==0){
+            $sub = new Subscription;
+        } else {
+            $sub = Subscription::find($id);
+        }
+        $sub->header = $header;
+        $sub->body = $body;
+        $sub->is_active = $active;
+        $sub->sending_date = $date;
+        $sub->done = 0;
+        $sub->save();
+        return json_encode('success');
+    }
+
+    public function deleteSubscriptions(Request $request){
+        $id = $request->id;
+        $sub = Subscription::find($id);
+        $sub->delete();
+        return json_encode('success');
     }
 }
 
