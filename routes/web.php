@@ -40,7 +40,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/unBlock',['middleware'=>'isAdmin','uses'=>'AdminController@unBlock','as'=>'unBlock']);
     Route::get('/export',['middleware'=>'isAdmin','uses'=>'CsvController@exportCsv','as'=>'export']);
     Route::get('/export/{id}',['middleware'=>'isAdmin','uses'=>'CsvController@exportCsvOne','as'=>'exportOne']);
-    Route::get('/import',['middleware'=>'isAdmin','uses'=>'CsvController@import','as'=>'import']);
+    Route::post('/import',['middleware'=>'isAdmin','uses'=>'CsvController@import','as'=>'import']);
     Route::post('/add',['uses'=>'PrDetailsController@add','as'=>'add']);
     Route::post('/buy',['uses'=>'PrDetailsController@buy','as'=>'buy']);
     Route::get('/pdf/{name}',['uses'=>'PrDetailsController@createPdf','as'=>'createPdf']);
@@ -55,9 +55,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/subscrAdmin',['middleware'=>'isAdmin','uses'=>'AdminController@subscriptions','as'=>'subscriptions']);
     Route::post('/subscrAdmin',['middleware'=>'isAdmin','uses'=>'AdminController@editSubscriptions','as'=>'editSubscriptions']);
     Route::post('/delSub',['middleware'=>'isAdmin','uses'=>'AdminController@deleteSubscriptions','as'=>'deleteSubscriptions']);
-
     Route::post('/subscribe',['uses'=>'SubscribeController@subscribe','as'=>'subscribe']);
-
 });
 
 Route::group(['prefix'=>'Api'],function (){

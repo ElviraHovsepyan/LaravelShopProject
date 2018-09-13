@@ -339,6 +339,25 @@ function checkUrl() {
             $('#hiddenInput').val(promocode);
         }
     }
+    if(url[1]=='products'){
+        var checkData = JSON.parse(localStorage.getItem('filter'));
+        if(checkData != null){
+            var subcatIds = checkData['check'];
+            var pr = checkData['price'];
+            result = 1;
+            $('.firstCheck').prop('checked',false);
+            $('.secondCheck').prop('checked',false);
+            $('.priceValue').text(pr);
+            $('.secondCheck').each(function () {
+                for(var i in subcatIds){
+                    if($(this).attr('subcatid') == subcatIds[i]){
+                        $(this).prop('checked',true);
+                    }
+                }
+            });
+            filterAjaxRequest(subcatIds,pr);
+        }
+    }
 }
 checkUrl();
 
@@ -347,6 +366,7 @@ $('#priceInputRange').on('input',function () {
     priceResult = $('#priceInputRange').val();
     $('.priceValue').text(priceResult);
 });
+
 $('#filter').click(function () {
     var subcatIds = [];
     result = 1;
@@ -360,6 +380,10 @@ $('#filter').click(function () {
            subcatIds.push(subId);
        }
    });
+    filterAjaxRequest(subcatIds,pr);
+});
+
+function filterAjaxRequest(subcatIds,pr){
     $.ajax({
         url:'/filter',
         type:'post',
@@ -368,7 +392,19 @@ $('#filter').click(function () {
         var products = JSON.parse(response);
         $('.main-products-page').empty();
         appendResults(products);
+        setToLocalStorageFilterData(subcatIds,pr);
     });
+}
+function setToLocalStorageFilterData(subcatIds,pr){
+    localStorage.removeItem('filter');
+    var arr={};
+    arr['check']=subcatIds;
+    arr['price']=pr;
+    localStorage.setItem('filter',JSON.stringify(arr));
+}
+$('#clear').click(function () {
+    localStorage.removeItem('filter');
+    location.reload();
 });
 
 function appendResults(products){
@@ -496,3 +532,78 @@ $('.deleteSub').click(function () {
         console.log(response);
     });
 });
+
+//////////////////////////// csv
+
+$("#csvForm").on('submit', function(e){
+    e.preventDefault();
+    var file = $('#UploadCsv')[0].files[0];
+    var data = new FormData;
+    data.append('file',file);
+    $.ajax({
+        url:'/import',
+        type: 'post',
+        dataType: 'JSON',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success:function(response){
+            console.log(response);
+            if(response=='Structure of your csv file is incorrect!'){
+                appentToModal(response,0);
+            } else {
+                console.log(response);
+                appentToModal(response,1);
+            }
+        },
+        error:function(response){
+            console.log(response);
+        }
+    });
+});
+
+function appentToModal(response,check){
+    if(check==0){
+        $('.modalTable').append("<tr>\n" +
+            "                                    <th>Product Name</th>\n" +
+            "                                    <th>Product description</th>\n" +
+            "                                    <th>Product picName</th>\n" +
+            "                                    <th>Product price</th>\n" +
+            "                                </tr><tr>\n" +
+            "                                    <td>Leather Shoulder Bag</td>\n" +
+            "                                    <td>Shaped from pebbled lambskin leather and set off with a polished stacked-T logo</td>\n" +
+            "                                    <td>pic555</td>\n" +
+            "                                    <td>543</td>\n" +
+            "                                </tr>\n" +
+            "                                <tr>\n" +
+            "                                    <td>Reversible Faux Leather Tote & Wristlet</td>\n" +
+            "                                    <td>Supersoft faux leather flips inside-out for a reversible tote while a matching wristlet</td>\n" +
+            "                                    <td>pic111</td>\n" +
+            "                                    <td>97</td>\n" +
+            "                                </tr>\n" +
+            "                                <tr>\n" +
+            "                                    <td>Elle Drop Earrings</td>\n" +
+            "                                    <td>Signature earrings flaunting a colorful stone are reimagined in a smaller, wear-anywhere size.</td>\n" +
+            "                                    <td>pic444</td>\n" +
+            "                                    <td>47</td>\n" +
+            "                                </tr>\n" +
+            "                                <tr>\n" +
+            "                                    <td>Elton Station Cuff Bracelet</td>\n" +
+            "                                    <td>A slender wrist cuff detailed with intricate etchings is finished with endcaps of richly textured and boldly colored jewels.</td>\n" +
+            "                                    <td>pic75</td>\n" +
+            "                                    <td>37</td>\n" +
+            "                                </tr>");
+        $('.alertMessage').text(response);
+    } else {
+
+        for(var i in response){
+            console.log(i);
+        }
+
+            // $('.modalTable').html("<tr><td>"+response[0]+"</td><td>"+response[1]+"</td><td>"+response[2]+"</td><td>"+response[3]+"</td></tr>");
+
+    }
+
+    $("#myModal2").modal("show");
+}

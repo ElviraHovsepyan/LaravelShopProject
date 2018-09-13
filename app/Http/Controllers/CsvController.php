@@ -49,25 +49,33 @@ class CsvController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
-    public function import(){
+    public function import(Request $request){
+        $csv = $request->file('file');
         $header = null;
-        if (($handle = fopen ( public_path('file.csv'), 'r' )) !== FALSE) {
+        if (($handle = fopen ( $csv, 'r' )) !== FALSE) {
             while ( ($row = fgetcsv( $handle, 1000, ',' )) !== FALSE ) {
-                if(!$header){
-                    $header = $row;
+                if(count($row)!= 4){
+                    return json_encode('Structure of your csv file is incorrect!');
                 } else {
-                    $data = array_combine($header,$row);
-                    $product = new Product();
-                    $product->name = $data['name'];
-                    $product->info = $data['info'];
-                    $product->pic = $data['pic'];
-                    $product->price = $data['price'];
-                    $product->save ();
+                    if(!$header){
+                        $header = $row;
+                    } else {
+
+                        return json_encode($row);
+//                        dd($row);
+//
+//                        $data = array_combine($header,$row);
+//                        $product = new Product();
+//                        $product->name = $data['name'];
+//                        $product->info = $data['info'];
+//                        $product->pic = $data['pic'];
+//                        $product->price = $data['price'];
+//                        $product->save ();
+                    }
                 }
             }
             fclose ($handle);
         }
-        return back();
     }
 }
 

@@ -104,14 +104,13 @@
                 <p>Choose the price</p>
                 <span class="ml">Min: 0</span><span class="priceValue"></span><span class="mr">Max: 400</span>
                 <input id="priceInputRange" type="range" min="0" max="400" step="1"><br><br>
-                <button class="btn" id="filter">Choose</button>
+                <button class="btn" id="filter">Choose</button><button class="btn" id="clear">Clear</button>
             </div>
             <div class="block">
                 <h4 class="title">
                     <span class="pull-left"><span class="text">Randomize</span></span>
                     <span class="pull-right">
-									<a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a>
-								</span>
+					<a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a></span>
                 </h4>
                 <div id="myCarousel" class="carousel slide">
                     <div class="carousel-inner">
@@ -174,13 +173,46 @@
 
 @section('footer')
         <section id="footer-bar">
-            @if(Auth::user())
-                <p class="subscribe">Subscribe to get last news</p>
-                <input type="mail" placeholder="Add your Email here" id="subscribe" autocomplete="off">
-                <button class="btn hideB" type="hidden"></button>
-                <button class="sendSubscribe">Subscribe</button><br><br>
-                <p class="alertResponse"></p>
-            @endif
+            <div class="row">
+                <div class="span6">
+                    @if(Auth::user())
+                        <p class="subscribe">Subscribe to get last news</p>
+                        <input type="mail" placeholder="Add your Email here" id="subscribe" autocomplete="off">
+                        <button class="btn hideB" type="hidden"></button>
+                        <button class="sendSubscribe">Subscribe</button><br><br>
+                        <p class="alertResponse"></p>
+                    @endif
+                </div>
+                <div class="span6">
+                    <p class="subscribe">Import CSV file</p>
+                    <form id="csvForm" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input type="file" id="UploadCsv" name="UploadCsv">
+                        <input type="submit">
+                    </form>
+                </div>
+            </div>
+            <div class="modal fade modalDiv" id="myModal2" role="dialog">
+                <div class="modal-dialog ">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Invoice</h4>
+                        </div>
+                        <div class="modal-body ng-scope pdfobject-container">
+                            <p class="alertMessage"></p>
+                            <p>Example:</p>
+                            <table class="table modalTable">
+
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="span3">
                     <h4>Navigation</h4>
