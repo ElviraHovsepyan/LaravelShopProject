@@ -333,7 +333,6 @@ function checkUrl() {
     if(url[1]=='register'){
        var promocode = $(location).attr('href');
        promocode = promocode.split('?promocode=');
-       console.log(promocode[1]);
         if(promocode[1]){
             promocode = promocode[1];
             $('#hiddenInput').val(promocode);
@@ -451,7 +450,7 @@ function sendPromocodes(name,active,discount,period,id){
         type:'post',
         data:{name:name,active:active,discount:discount,period:period,id:id}
     }).done(function(response){
-        console.log(response);
+        // console.log(response);
     });
 }
 
@@ -481,7 +480,6 @@ $('.sendSubscribe').click(function () {
             data: {email:email}
         }).done(function(response){
             var sub = JSON.parse(response);
-            console.log(sub);
             $('.alertResponse').text(sub);
         });
     } else {
@@ -518,7 +516,7 @@ function sendSubscription(header,body,active,date,id){
         type:'post',
         data:{header:header,body:body,active:active,date:date,id:id}
     }).done(function(response){
-        console.log(response);
+        // console.log(response);
     });
 }
 
@@ -549,11 +547,11 @@ $("#csvForm").on('submit', function(e){
         contentType: false,
         processData: false,
         success:function(response){
-            console.log(response);
+            // console.log(response);
             if(response=='Structure of your csv file is incorrect!'){
                 appentToModal(response,0);
             } else {
-                console.log(response);
+                // console.log(response);
                 appentToModal(response,1);
             }
         },
@@ -565,7 +563,7 @@ $("#csvForm").on('submit', function(e){
 
 function appentToModal(response,check){
     if(check==0){
-        $('.modalTable').append("<tr>\n" +
+        $('.modalTable').html("<tr>\n" +
             "                                    <th>Product Name</th>\n" +
             "                                    <th>Product description</th>\n" +
             "                                    <th>Product picName</th>\n" +
@@ -595,15 +593,40 @@ function appentToModal(response,check){
             "                                    <td>37</td>\n" +
             "                                </tr>");
         $('.alertMessage').text(response);
-    } else {
+        $('.example').text('Example: ');
 
-        for(var i in response){
-            console.log(i);
+    } else {
+        $('.modalTable').empty();
+
+        var arr = Object.keys(response[0]);
+        $('.modalTable').append('<td>#</td>');
+        for(var i=0; i<arr.length; i++){
+            $('.modalTable').append('<td><select class="firstSelect">');
+                for(var j in arr){
+                    $('.firstSelect:eq('+i+')').append('<option>'+arr[j]+'</option>');
+                }
+            $('.modalTable').append('</select></td>');
         }
 
-            // $('.modalTable').html("<tr><td>"+response[0]+"</td><td>"+response[1]+"</td><td>"+response[2]+"</td><td>"+response[3]+"</td></tr>");
+        for(var k in response){
+            $('.modalTable').append('<tr><td><input type="checkbox"></td>');
+                for(var j in response[k]){
+                    $('.modalTable tr:eq('+k+')').append('<td>'+response[k][j]+'</td>');
+                }
+            $('.modalTable').append('</tr>');
+        }
 
+        $('.firstSelect').on('change',function () {
+            console.log(555);
+        });
+
+        $('.example').text('Select columns');
+        $('.alertMessage').text('Choose the rows you want to import');
     }
-
+    $(document).scrollTop(0);
     $("#myModal2").modal("show");
 }
+
+$('.csvButton').click(function () {
+   alert();
+});

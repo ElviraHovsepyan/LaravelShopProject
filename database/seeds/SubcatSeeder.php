@@ -29,6 +29,6 @@ class SubcatSeeder extends Seeder
 //
 //        ]);
 
-        factory(Product::class,10)->create();
+        factory(Product::class,20)->create();
     }
 }

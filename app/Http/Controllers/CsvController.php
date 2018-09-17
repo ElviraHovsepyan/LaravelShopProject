@@ -60,11 +60,8 @@ class CsvController extends Controller
                     if(!$header){
                         $header = $row;
                     } else {
+                        $data[] = array_combine($header,$row);
 
-                        return json_encode($row);
-//                        dd($row);
-//
-//                        $data = array_combine($header,$row);
 //                        $product = new Product();
 //                        $product->name = $data['name'];
 //                        $product->info = $data['info'];
@@ -74,8 +71,10 @@ class CsvController extends Controller
                     }
                 }
             }
+
             fclose ($handle);
         }
+        return json_encode($data);
     }
 }
 

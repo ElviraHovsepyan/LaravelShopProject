@@ -172,5 +172,14 @@
 .alertMessage{
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
+}
+.example{
+    margin-bottom: 20px;
+}
+.checkRow{
+    margin-top:5px!important;
+}
+#myModal2{
+    display: none;
 }

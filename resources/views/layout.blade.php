@@ -202,10 +202,9 @@
                         </div>
                         <div class="modal-body ng-scope pdfobject-container">
                             <p class="alertMessage"></p>
-                            <p>Example:</p>
-                            <table class="table modalTable">
-
-                            </table>
+                            <p class="example"></p>
+                            <table class="table modalTable"></table>
+                            <button class="btn csvButton">Import CSV</button>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
