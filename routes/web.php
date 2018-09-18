@@ -38,9 +38,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/promocode',['middleware'=>'isAdmin','uses'=>'AdminController@editPromocodes','as'=>'editPromocodes']);
     Route::post('/block',['middleware'=>'isAdmin','uses'=>'AdminController@block','as'=>'block']);
     Route::post('/unBlock',['middleware'=>'isAdmin','uses'=>'AdminController@unBlock','as'=>'unBlock']);
-    Route::get('/export',['middleware'=>'isAdmin','uses'=>'CsvController@exportCsv','as'=>'export']);
-    Route::get('/export/{id}',['middleware'=>'isAdmin','uses'=>'CsvController@exportCsvOne','as'=>'exportOne']);
-    Route::post('/import',['middleware'=>'isAdmin','uses'=>'CsvController@import','as'=>'import']);
+    Route::get('/export',['uses'=>'CsvController@exportCsv','as'=>'export']);
+    Route::get('/export/{id}',['uses'=>'CsvController@exportCsvOne','as'=>'exportOne']);
+    Route::post('/import',['uses'=>'CsvController@import','as'=>'import']);
     Route::post('/add',['uses'=>'PrDetailsController@add','as'=>'add']);
     Route::post('/buy',['uses'=>'PrDetailsController@buy','as'=>'buy']);
     Route::get('/pdf/{name}',['uses'=>'PrDetailsController@createPdf','as'=>'createPdf']);

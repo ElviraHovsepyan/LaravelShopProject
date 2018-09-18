@@ -102,7 +102,7 @@ function ajaxRequest(url,data,hide){
             }
         },
         error:function(response){
-            console.log(response);
+            // console.log(response);
         }
     });
 }
@@ -119,7 +119,7 @@ $('.block-users').click(function () {
             type: 'post',
             data: {id:id}
         }).done(function(response){
-            console.log(response);
+            // console.log(response);
 
         });
     } else {
@@ -129,7 +129,7 @@ $('.block-users').click(function () {
             type: 'post',
             data: {id:id}
         }).done(function(response){
-            console.log(response);
+            // console.log(response);
             $(this).text('Unblock');
         });
     }
@@ -182,7 +182,6 @@ var increase = 0;
 $(window).scroll(function () {
     if(($(window).scrollTop() + $(window).height() + 300 >= $(document).height()) && (inProgress == false) && (result == 0)){
         inProgress = true;
-        // console.log(number);
         $.ajax({
             url: '/scroll',
             type: 'post',
@@ -464,7 +463,7 @@ $('.editStorage').click(function () {
         type: 'post',
         data: {quantity:quantity,id:id}
     }).done(function (response) {
-        console.log(response);
+        // console.log(response);
     });
 });
 
@@ -527,7 +526,7 @@ $('.deleteSub').click(function () {
         type:'post',
         data:{id:id}
     }).done(function (response) {
-        console.log(response);
+        // console.log(response);
     });
 });
 
@@ -556,7 +555,7 @@ $("#csvForm").on('submit', function(e){
             }
         },
         error:function(response){
-            console.log(response);
+            // console.log(response);
         }
     });
 });
@@ -607,26 +606,27 @@ function appentToModal(response,check){
                 }
             $('.modalTable').append('</select></td>');
         }
-
         for(var k in response){
-            $('.modalTable').append('<tr><td><input type="checkbox"></td>');
+            $('.modalTable').append('<tr><td><input type="checkbox" class="checkCsvRows"></td>');
                 for(var j in response[k]){
-                    $('.modalTable tr:eq('+k+')').append('<td>'+response[k][j]+'</td>');
+                    $('.modalTable tr:eq('+k+')').append('<td class="csvTd">'+response[k][j]+'</td>');
                 }
             $('.modalTable').append('</tr>');
         }
 
-        $('.firstSelect').on('change',function () {
-            console.log(555);
-        });
-
         $('.example').text('Select columns');
         $('.alertMessage').text('Choose the rows you want to import');
+        $('.csvButton').show();
     }
     $(document).scrollTop(0);
     $("#myModal2").modal("show");
 }
 
 $('.csvButton').click(function () {
-   alert();
+    var arr = [];
+   $('.checkCsvRows').each(function () {
+       if($(this).is(':checked')){
+           console.log($(this).closest('tr').children('.csvTd').text());
+       }
+   });
 });

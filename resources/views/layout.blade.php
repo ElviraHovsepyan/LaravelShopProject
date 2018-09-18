@@ -185,7 +185,7 @@
                 </div>
                 <div class="span6">
                     <p class="subscribe">Import CSV file</p>
-                    <form id="csvForm" enctype="multipart/form-data">
+                    <form id="csvForm" method="post" action="{{ route('import') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="file" id="UploadCsv" name="UploadCsv">
                         <input type="submit">
