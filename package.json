@@ -22,6 +22,8 @@
     "dependencies": {
         "dateformat": "^3.0.3",
         "express": "^4.15.2",
+        "finalhandler": "^1.1.1",
+        "merge-descriptors": "^1.0.1",
         "mysql": "^2.16.0",
         "socket.io": "^2.1.1"
     }

@@ -61,24 +61,33 @@ class CsvController extends Controller
                         $header = $row;
                     } else {
                         $data[] = array_combine($header,$row);
-
-//                        $product = new Product();
-//                        $product->name = $data['name'];
-//                        $product->info = $data['info'];
-//                        $product->pic = $data['pic'];
-//                        $product->price = $data['price'];
-//                        $product->save ();
                     }
                 }
             }
-
             fclose ($handle);
         }
         return json_encode($data);
     }
+
+    public function insert(Request $request){
+        $dataAll = $request->data;
+        $select = $request->selectData;
+        foreach($dataAll as $data){
+            $dataNew[] = array_combine($select,$data);
+        }
+        foreach($dataNew as $data){
+            $product = new Product();
+            $product->name = $data['name'];
+            $product->info = $data['info'];
+            $product->pic = $data['pic'];
+            $product->price = $data['price'];
+            $product->save ();
+        }
+        return 'success';
+    }
 }
 
-
+0
 
 
 

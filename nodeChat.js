@@ -41,7 +41,6 @@ io.sockets.on('connection', function (socket) {
             socket.message = data.message;
             socket.userId = data.userId;
             if(room == 1){
-                // io.sockets.in(data.userId).emit('add_message',{message:socket.message,userName:socket.userName,userId:socket.userId});
                 io.sockets.in(data.receiverId).emit('add_message',{message:socket.message,userName:socket.userName,userId:socket.userId});
             }
             else {

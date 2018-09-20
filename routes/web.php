@@ -41,6 +41,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/export',['uses'=>'CsvController@exportCsv','as'=>'export']);
     Route::get('/export/{id}',['uses'=>'CsvController@exportCsvOne','as'=>'exportOne']);
     Route::post('/import',['uses'=>'CsvController@import','as'=>'import']);
+    Route::post('/insert',['uses'=>'CsvController@insert','as'=>'insert']);
+
+
     Route::post('/add',['uses'=>'PrDetailsController@add','as'=>'add']);
     Route::post('/buy',['uses'=>'PrDetailsController@buy','as'=>'buy']);
     Route::get('/pdf/{name}',['uses'=>'PrDetailsController@createPdf','as'=>'createPdf']);

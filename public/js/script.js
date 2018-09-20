@@ -614,6 +614,10 @@ function appentToModal(response,check){
             $('.modalTable').append('</tr>');
         }
 
+        $('.firstSelect').each(function(i){
+            $(this).children('option:eq('+i+')').attr('selected','selected');
+        });
+
         $('.example').text('Select columns');
         $('.alertMessage').text('Choose the rows you want to import');
         $('.csvButton').show();
@@ -621,12 +625,38 @@ function appentToModal(response,check){
     $(document).scrollTop(0);
     $("#myModal2").modal("show");
 }
+//
+// $('.firstSelect').on('change',function () {
+//
+//
+// });
 
 $('.csvButton').click(function () {
-    var arr = [];
+    var arr2 = [];
    $('.checkCsvRows').each(function () {
+       var arr = [];
        if($(this).is(':checked')){
-           console.log($(this).closest('tr').children('.csvTd').text());
+           $(this).closest('tr').children('.csvTd').each(function(){
+               arr.push($(this).text());
+           });
+          arr2.push(arr);
        }
    });
+
+    var arrSelect = [];
+    $('.firstSelect').each(function(){
+       var value = $(this).val();
+       arrSelect.push(value);
+   });
+
+    $.ajax({
+        url:'/insert',
+        type:'post',
+        data:{data:arr2,selectData:arrSelect}
+    }).done(function (response) {
+        console.log(response);
+        if(response=='success'){
+            $("#myModal2").modal("hide");
+        }
+    });
 });
