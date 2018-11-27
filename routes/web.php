@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test','TestController@testCurl');
+
 Route::get('/',function(){return redirect()->route('products');});
 Route::get('/products/all/{scroll?}',['uses'=>'ProductsController@show','as'=>'products']);
 Route::get('/productDetails/{id}',['uses'=>'PrDetailsController@show','as'=>'productDetails']);

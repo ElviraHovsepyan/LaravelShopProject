@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "001f376ad6c517f21f48af649a8f8c88",
+    "content-hash": "d8d7bc7583b004b0e98d530c07d14ce8",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -535,12 +535,12 @@
             "version": "v2.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/google/google-api-php-client.git",
+                "url": "https://github.com/googleapis/google-api-php-client.git",
                 "reference": "4e0fd83510e579043e10e565528b323b7c2b3c81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client/zipball/4e0fd83510e579043e10e565528b323b7c2b3c81",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/4e0fd83510e579043e10e565528b323b7c2b3c81",
                 "reference": "4e0fd83510e579043e10e565528b323b7c2b3c81",
                 "shasum": ""
             },
@@ -594,12 +594,12 @@
             "version": "v0.64",
             "source": {
                 "type": "git",
-                "url": "https://github.com/google/google-api-php-client-services.git",
+                "url": "https://github.com/googleapis/google-api-php-client-services.git",
                 "reference": "0250aa8cadbe58e790aa07d736b675f3bdd87a1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/0250aa8cadbe58e790aa07d736b675f3bdd87a1c",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/0250aa8cadbe58e790aa07d736b675f3bdd87a1c",
                 "reference": "0250aa8cadbe58e790aa07d736b675f3bdd87a1c",
                 "shasum": ""
             },
@@ -631,12 +631,12 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/google/google-auth-library-php.git",
+                "url": "https://github.com/googleapis/google-auth-library-php.git",
                 "reference": "436007a77fd2037f933d3a5c8e4c7e0c9b88a7b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-auth-library-php/zipball/436007a77fd2037f933d3a5c8e4c7e0c9b88a7b0",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/436007a77fd2037f933d3a5c8e4c7e0c9b88a7b0",
                 "reference": "436007a77fd2037f933d3a5c8e4c7e0c9b88a7b0",
                 "shasum": ""
             },

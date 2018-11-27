@@ -93,10 +93,12 @@ class ApiController extends Controller
                 $info = $request->input('info');
                 $price = $request->input('price');
                 $pic = $request->file('pic');
+
                 $pic->move('themes/images/prPics', $pic->getClientOriginalName());
                 $pic =  $pic->getClientOriginalName();
                 $pic = explode('.',$pic);
                 $pic = $pic[0];
+
                 $product = new Product;
                 $product->name = $name;
                 $product->info = $info;
